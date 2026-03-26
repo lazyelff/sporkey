@@ -1,4 +1,12 @@
 node_modules/
-.env
-.next/
+build/
+.env*
+.DS_Store
+coverage/
+logs/
 dist/
+tmp/
+npm-debug.log*
+pnpm-lock.yaml
+yarn.lock
+*.tgz
