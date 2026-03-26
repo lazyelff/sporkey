@@ -1,0 +1,619 @@
+.profile-container {
+    padding: 2.5rem;
+    color: var(--text-primary);
+    max-width: 900px;
+    margin: 0 auto;
+    animation: fadeIn 0.3s ease-out;
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+}
+
+.profile-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.profile-container::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+.profile-container::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 4px;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.back-btn {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-size: var(--font-base);
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.back-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--glow);
+}
+
+.profile-content {
+    display: grid;
+    gap: 2rem;
+}
+
+/* Profile Card */
+.profile-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.15);
+}
+
+/* User Info - Left Aligned */
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.profile-top-section {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.avatar-section {
+    flex-shrink: 0;
+}
+
+.avatar-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+    border: 3px solid var(--accent);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.avatar-circle:hover {
+    transform: scale(1.05);
+}
+
+.avatar-circle.has-image {
+    padding: 0;
+    overflow: hidden;
+    background: none;
+    border-color: var(--accent);
+}
+
+.avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.username-display {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.edit-profile-btn {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 6px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    width: fit-content;
+    transition: var(--transition);
+}
+
+.edit-profile-btn:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* Favorite Team Tag */
+.favorite-team-section {
+    margin-top: 0.5rem;
+}
+
+.favorite-team-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 8px 16px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.favorite-team-tag:hover {
+    background: rgba(107, 33, 168, 0.2);
+}
+
+.favorite-team-tag.has-team {
+    background: rgba(107, 33, 168, 0.2);
+}
+
+.favorite-team-tag.dashed {
+    border-style: dashed;
+}
+
+.favorite-team-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+    min-width: 250px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.favorite-team-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.favorite-team-dropdown::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+.favorite-team-option {
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.2s;
+    color: var(--text-primary);
+}
+
+.favorite-team-option:hover {
+    background: rgba(107, 33, 168, 0.2);
+}
+
+/* Stats Grid - 2x2 */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.stat-box {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    transition: var(--transition);
+}
+
+.stat-box:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.2);
+}
+
+.stat-label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-family: 'League Spartan', sans-serif;
+}
+
+.stat-value {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.stat-value.balance {
+    color: #fbbf24;
+}
+
+.stat-value.won {
+    color: #22c55e;
+}
+
+.stat-value.lost {
+    color: #ef4444;
+}
+
+.stat-value.bets {
+    color: var(--accent);
+}
+
+/* Betting History */
+.bets-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent-light);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.bets-history {
+    margin-top: 1rem;
+}
+
+.no-bets-message {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 3rem;
+    background: var(--bg-card);
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.bets-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.bets-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.bets-list::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 3px;
+}
+
+.bet-item {
+    background: var(--bg-card);
+    padding: 1.25rem;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    transition: var(--transition);
+}
+
+.bet-item:hover {
+    transform: translateX(8px);
+    background: var(--bg-secondary);
+    border-color: var(--accent);
+}
+
+.bet-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+}
+
+.bet-match {
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.bet-date {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.bet-status {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.bet-status.won {
+    color: #22c55e;
+}
+
+.bet-status.lost {
+    color: #ef4444;
+}
+
+.bet-status.pending {
+    color: #fbbf24;
+}
+
+.bet-details {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.bet-amount {
+    font-weight: 700;
+    color: #fbbf24;
+    font-size: 1.1rem;
+    font-family: 'Barlow Condensed', sans-serif;
+}
+
+/* Avatar Editor */
+.avatar-editor {
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    padding: 1.5rem;
+    border-radius: 16px;
+    margin-top: 1.5rem;
+    border: 1px solid var(--border);
+    animation: fadeIn 0.25s ease-out;
+}
+
+.editor-section-title {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 1rem;
+    font-weight: 600;
+}
+
+/* Upload Section */
+.upload-section {
+    margin-bottom: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.file-input-hidden {
+    display: none;
+}
+
+.upload-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 0.7rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.upload-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px var(--glow);
+}
+
+/* Preview */
+.preview-container {
+    text-align: center;
+}
+
+.upload-preview {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--accent);
+    margin-bottom: 0.8rem;
+}
+
+.preview-actions {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-bottom: 0.6rem;
+}
+
+.upload-confirm-btn {
+    background: #22c55e;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.upload-confirm-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.upload-confirm-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.upload-cancel-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.upload-cancel-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Progress Bar */
+.progress-bar-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 0.5rem;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* Error Message */
+.upload-error {
+    color: #ef4444;
+    font-size: 0.85rem;
+    margin-top: 0.6rem;
+    padding: 0.5rem;
+    background: rgba(239, 68, 68, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Remove Custom Avatar */
+.remove-custom-btn {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-top: 0.8rem;
+    transition: background 0.2s;
+}
+
+.remove-custom-btn:hover {
+    background: rgba(239, 68, 68, 0.3);
+}
+
+/* Preset Grid */
+.preset-section {
+    margin-top: 0;
+}
+
+.preset-grid {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.preset-avatar {
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background: transparent;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.preset-avatar:hover {
+    background: rgba(107, 33, 168, 0.2);
+    transform: scale(1.15);
+}
+
+.preset-avatar.active {
+    background: rgba(107, 33, 168, 0.3);
+    box-shadow: 0 0 0 2px var(--accent);
+}
+
+/* Light Mode */
+[data-theme="light"] .profile-card {
+    background: #fff;
+    border-color: var(--accent);
+}
+
+[data-theme="light"] .username-display {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .bet-item {
+    background: var(--bg-secondary);
+}
+
+[data-theme="light"] .bet-match {
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .no-bets-message {
+    background: var(--bg-secondary);
+}
+
+[data-theme="light"] .avatar-editor {
+    background: var(--bg-secondary);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .profile-top-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .bet-item {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .bet-details {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

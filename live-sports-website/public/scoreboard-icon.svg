@@ -1,0 +1,14 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Star at top -->
+  <path d="M256 30L310 150L436 150L341 232L386 352L256 270L126 352L171 232L76 150L202 150Z" fill="#2d6e40"/>
+  
+  <!-- Bar chart at bottom -->
+  <g transform="translate(0, 200)">
+    <!-- Left bar (shortest) -->
+    <rect x="50" y="200" width="80" height="120" rx="10" fill="#4da969"/>
+    <!-- Middle bar (tallest) -->
+    <rect x="192" y="100" width="80" height="220" rx="10" fill="#4da969"/>
+    <!-- Right bar (medium) -->
+    <rect x="334" y="150" width="80" height="170" rx="10" fill="#4da969"/>
+  </g>
+</svg>

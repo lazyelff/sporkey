@@ -1,0 +1,235 @@
+/* Notification Center */
+.notification-center {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    pointer-events: auto;
+}
+
+.notification {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 0;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    min-width: 350px;
+    max-width: 450px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border);
+    animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: auto;
+}
+
+/* Goal Notification */
+.notification-goal {
+    border-color: var(--accent);
+    border-left: 6px solid var(--accent);
+}
+
+.notification-content {
+    flex: 1;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.notification-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification-icon {
+    font-size: 2rem;
+    animation: bounce 0.8s ease-in-out infinite;
+}
+
+.notification-title {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: var(--font-lg);
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.notification-body {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 1rem;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+}
+
+.team-name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: var(--font-base);
+    text-transform: uppercase;
+}
+
+.goal-score {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-secondary);
+    padding: 8px 15px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-heading);
+    font-size: var(--font-xl);
+    font-weight: 800;
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.score-home {
+    color: #22c55e;
+}
+
+.score-away {
+    color: #ef4444;
+}
+
+.goal-minute {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(59, 130, 246, 0.1);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.minute-label {
+    color: #3b82f6;
+    font-weight: 700;
+    font-size: var(--font-sm);
+}
+
+.notification-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85em;
+    color: #888;
+    border-top: 1px solid rgba(45, 110, 64, 0.1);
+    padding-top: 8px;
+}
+
+.match-info {
+    flex: 1;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.notification-close {
+    background: rgba(45, 110, 64, 0.15);
+    border: none;
+    color: #2d6e40;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    margin: 8px 8px 0 0;
+}
+
+.notification-close:hover {
+    background: rgba(45, 110, 64, 0.3);
+    color: #2d6e40;
+    transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .notification-center {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+    }
+
+    .notification {
+        min-width: unset;
+        max-width: unset;
+    }
+}
+
+@media (max-width: 480px) {
+    .notification-center {
+        top: 8px;
+        right: 8px;
+        left: 8px;
+    }
+
+    .notification {
+        min-width: unset;
+        max-width: unset;
+        padding: 0;
+    }
+
+    .notification-content {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .notification-title {
+        font-size: 0.95em;
+    }
+
+    .notification-body {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .team-name {
+        font-size: 0.9em;
+    }
+
+    .goal-score {
+        padding: 6px 10px;
+        gap: 8px;
+    }
+
+    .score-home,
+    .score-away {
+        font-size: 1.1em;
+    }
+
+    .goal-minute {
+        padding: 6px 10px;
+    }
+
+    .minute-label {
+        font-size: 0.9em;
+    }
+
+    .notification-footer {
+        font-size: 0.75em;
+    }
+
+    .notification-close {
+        width: 28px;
+        height: 28px;
+        font-size: 0.95em;
+        margin: 6px 6px 0 0;
+    }
+}

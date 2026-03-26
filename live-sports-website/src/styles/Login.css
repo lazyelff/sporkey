@@ -1,0 +1,406 @@
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&display=swap');
+
+:root {
+    --brand-purple: #6B21A8;
+    --brand-purple-dark: #4c1d95;
+    --brand-purple-light: #8b5cf6;
+}
+
+.login-page {
+    display: flex;
+    width: 100vw;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: #0a0a0a;
+}
+
+.login-page-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.login-page-bg .bg-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f1a 100%);
+}
+
+.login-page-bg .bg-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(107, 33, 168, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(107, 33, 168, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 40% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 35%);
+    opacity: 0.8;
+}
+
+.login-page-bg .bg-glow {
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle, rgba(107, 33, 168, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.login-page-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.login-promo-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 60px;
+    gap: 5px;
+    overflow: hidden;
+}
+
+.promo-logo-link {
+    text-decoration: none;
+    margin-top: -140px;
+}
+
+.promo-logo {
+    width: 620px;
+    height: auto;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+    transition: transform 0.3s ease;
+}
+
+.promo-text-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 600px;
+    margin-top: 5px;
+}
+
+.promo-heading {
+    font-family: 'League Spartan', sans-serif;
+    color: #ffffff;
+    font-size: 1.9rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.promo-subheading {
+    font-family: 'League Spartan', sans-serif;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+.login-panel {
+    width: 45%;
+    min-width: 450px;
+    max-width: 600px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    background: linear-gradient(180deg, rgba(26, 26, 46, 0.95) 0%, rgba(15, 15, 26, 0.98) 100%);
+    border-left: 1px solid rgba(107, 33, 168, 0.3);
+    position: relative;
+    overflow-y: auto;
+}
+
+.login-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(107, 33, 168, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.custom-login-form {
+    width: 100%;
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    animation: fadeBlurIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeBlurIn {
+    0% {
+        opacity: 0;
+        filter: blur(15px);
+    }
+    100% {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+.login-panel-logo {
+    width: 200px;
+    height: auto;
+    margin: 0 auto 20px auto;
+    display: block;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.panel-title {
+    color: #ffffff;
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+    font-family: 'League Spartan', sans-serif;
+    text-shadow: 2px 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+.panel-error {
+    color: #ff6b6b;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 5px;
+    background: rgba(255, 107, 107, 0.1);
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.panel-input-wrapper input {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(43, 44, 85, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.panel-input-wrapper input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.panel-input-wrapper input:focus, 
+.panel-input-wrapper input:not(:placeholder-shown) {
+    background: #e8f0fe;
+    color: #000;
+    border-color: #ffffff;
+}
+
+.panel-input-wrapper input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 40px #e8f0fe inset !important;
+    -webkit-text-fill-color: #000 !important;
+}
+
+.panel-submit-btn {
+    width: 100%;
+    align-self: center;
+    padding: 14px;
+    margin-top: 10px;
+    background: linear-gradient(135deg, var(--brand-purple) 0%, var(--brand-purple-dark) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 1.5px;
+}
+
+.panel-submit-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--brand-purple-light) 0%, var(--brand-purple) 100%);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(107, 33, 168, 0.4);
+}
+
+.panel-submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.panel-footer-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.panel-toggle-btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.panel-toggle-btn:hover {
+    color: var(--brand-purple-light);
+}
+
+.footer-divider {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.95rem;
+}
+
+@media (max-width: 1024px) {
+    .login-page-container {
+        flex-direction: column;
+    }
+    
+    .login-promo-section {
+        flex: none;
+        padding: 15px 12px;
+        align-items: center;
+        text-align: center;
+        min-height: auto;
+    }
+    
+    .promo-logo {
+        width: 380px;
+    }
+    
+    .promo-logo-link {
+        margin-top: -80px;
+    }
+    
+    .promo-text-content {
+        margin-top: 0;
+    }
+    
+    .promo-heading {
+        font-size: 1.4rem;
+    }
+    
+    .promo-subheading {
+        font-size: 0.95rem;
+    }
+    
+    .login-panel {
+        width: 100%;
+        min-width: auto;
+        max-width: 100%;
+        height: auto;
+        min-height: calc(100vh - 350px);
+        border-left: none;
+        border-top: 1px solid rgba(107, 33, 168, 0.3);
+    }
+}
+
+@media (max-width: 600px) {
+    .login-promo-section {
+        padding: 12px 10px;
+    }
+    
+    .promo-logo {
+        width: 240px;
+    }
+    
+    .promo-logo-link {
+        margin-top: -60px;
+    }
+    
+    .promo-text-content {
+        margin-top: 0;
+    }
+    
+    .promo-heading {
+        font-size: 1.15rem;
+    }
+    
+    .promo-subheading {
+        font-size: 0.85rem;
+    }
+    
+    .login-panel {
+        padding: 18px 10px;
+    }
+    
+    .login-panel-logo {
+        width: 280px;
+    }
+    
+    .panel-title {
+        font-size: 1.4rem;
+    }
+    
+    .custom-login-form {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 400px) {
+    .promo-logo {
+        width: 200px;
+    }
+    
+    .promo-logo-link {
+        margin-top: -50px;
+    }
+    
+    .promo-text-content {
+        margin-top: 0;
+    }
+    
+    .promo-heading {
+        font-size: 1rem;
+    }
+    
+    .promo-subheading {
+        font-size: 0.8rem;
+    }
+    
+    .panel-title {
+        font-size: 1.3rem;
+    }
+    
+    .login-panel-logo {
+        width: 240px;
+    }
+    
+    .panel-footer-links {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .footer-divider {
+        display: none;
+    }
+}
