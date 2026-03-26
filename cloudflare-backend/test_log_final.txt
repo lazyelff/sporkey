@@ -1,0 +1,50 @@
+
+ RUN  v4.1.1 C:/Users/Précision/Desktop/ma vids/Pummel Party/SporKey/cloudflare-backend
+
+stderr | tests/auth.test.ts > Auth Routes Test Suite > 5. POST /api/auth/login - Success
+Login error: SqliteError: UNIQUE constraint failed: UserSessions.tokenHash
+    at Object.run (C:/Users/Précision/Desktop/ma vids/Pummel Party/SporKey/cloudflare-backend/tests/helpers.ts:14:32)
+    at D1PreparedQuery.run [90m(file:///C:/Users/Pr%C3%A9cision/Desktop/ma%20vids/Pummel%20Party/SporKey/cloudflare-backend/[39mnode_modules/[4mdrizzle-orm[24m/d1/session.js:113:38[90m)[39m
+    at QueryPromise.run [90m(file:///C:/Users/Pr%C3%A9cision/Desktop/ma%20vids/Pummel%20Party/SporKey/cloudflare-backend/[39mnode_modules/[4mdrizzle-orm[24m/sqlite-core/query-builders/insert.js:142:28[90m)[39m
+    at QueryPromise.execute [90m(file:///C:/Users/Pr%C3%A9cision/Desktop/ma%20vids/Pummel%20Party/SporKey/cloudflare-backend/[39mnode_modules/[4mdrizzle-orm[24m/sqlite-core/query-builders/insert.js:154:54[90m)[39m
+    at QueryPromise.then [90m(file:///C:/Users/Pr%C3%A9cision/Desktop/ma%20vids/Pummel%20Party/SporKey/cloudflare-backend/[39mnode_modules/[4mdrizzle-orm[24m/query-promise.js:21:17[90m)[39m {
+  code: [32m'SQLITE_CONSTRAINT_UNIQUE'[39m
+}
+
+ ❯ tests/auth.test.ts (8 tests | 1 failed) 294ms
+     ✓ 1. POST /api/auth/register - Success 111ms
+     ✓ 2. POST /api/auth/register - Missing fields 2ms
+     ✓ 3. POST /api/auth/register - Minimum password length 1ms
+     ✓ 4. POST /api/auth/register - Existing user conflict 2ms
+     × 5. POST /api/auth/login - Success 91ms
+     ✓ 6. POST /api/auth/login - Non-existent email 2ms
+     ✓ 7. POST /api/auth/login - Incorrect password 72ms
+     ✓ 8. POST /api/auth/login - Missing fields 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/auth.test.ts > Auth Routes Test Suite > 5. POST /api/auth/login - Success
+AssertionError: expected 500 to be 200 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 500[39m
+
+ ❯ tests/auth.test.ts:70:24
+     68|       body: JSON.stringify({ email: 'test@example.com', password: 'pas…
+     69|     }, env);
+     70|     expect(res.status).toBe(200);
+       |                        ^
+     71|     const body: any = await res.json();
+     72|     expect(body.success).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 7 passed (8)
+   Start at  20:19:43
+   Duration  1.38s (transform 241ms, setup 0ms, import 757ms, tests 294ms, environment 0ms)
+

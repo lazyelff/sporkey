@@ -1,0 +1,16 @@
+name = "cloudflare-backend"
+main = "src/index.ts"
+compatibility_date = "2024-12-05"
+compatibility_flags = [ "nodejs_compat" ]
+
+[dev]
+port = 8787
+
+[[d1_databases]]
+binding = "DB"
+database_name = "sporkey"
+database_id = "84866b5d-25d9-4207-84a6-a37571d5bc83"
+
+[[r2_buckets]]
+binding = "AVATARS_BUCKET"
+bucket_name = "avatars"

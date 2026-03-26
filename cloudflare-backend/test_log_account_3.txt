@@ -1,0 +1,83 @@
+
+ RUN  v4.1.1 C:/Users/Précision/Desktop/ma vids/Pummel Party/SporKey/cloudflare-backend
+
+stderr | tests/account.test.ts > Account Routes Test Suite > 29. DELETE /api/account - Success
+Delete error: SqliteError: FOREIGN KEY constraint failed
+    at Object.run (C:/Users/Précision/Desktop/ma vids/Pummel Party/SporKey/cloudflare-backend/tests/helpers.ts:14:32)
+    at D1PreparedQuery.run [90m(file:///C:/Users/Pr%C3%A9cision/Desktop/ma%20vids/Pummel%20Party/SporKey/cloudflare-backend/[39mnode_modules/[4mdrizzle-orm[24m/d1/session.js:113:38[90m)[39m
+    at D1PreparedQuery.execute [90m(file:///C:/Users/Pr%C3%A9cision/Desktop/ma%20vids/Pummel%20Party/SporKey/cloudflare-backend/[39mnode_modules/[4mdrizzle-orm[24m/sqlite-core/session.js:41:38[90m)[39m
+    at QueryPromise.execute [90m(file:///C:/Users/Pr%C3%A9cision/Desktop/ma%20vids/Pummel%20Party/SporKey/cloudflare-backend/[39mnode_modules/[4mdrizzle-orm[24m/sqlite-core/query-builders/delete.js:86:28[90m)[39m
+    at QueryPromise.then [90m(file:///C:/Users/Pr%C3%A9cision/Desktop/ma%20vids/Pummel%20Party/SporKey/cloudflare-backend/[39mnode_modules/[4mdrizzle-orm[24m/query-promise.js:21:17[90m)[39m {
+  code: [32m'SQLITE_CONSTRAINT_FOREIGNKEY'[39m
+}
+
+ ❯ tests/account.test.ts (22 tests | 2 failed) 748ms
+     ✓ 9. GET /api/account/me - Success 4ms
+     ✓ 10. PUT /api/account/profile - Update username 4ms
+     ✓ 11. PUT /api/account/profile - Email change sets pendingEmail 3ms
+     ✓ 12. PUT /api/account/profile - Duplicate data conflict 108ms
+     ✓ 13. PUT /api/account/password - Success 215ms
+     ✓ 14. PUT /api/account/password - Too short 1ms
+     ✓ 15. GET /api/account/notifications - Fetch defaults 2ms
+     ✓ 16. PUT /api/account/notifications - Update prefs 2ms
+     ✓ 17. PUT /api/account/feed-settings - Update defaults 3ms
+     ✓ 18. POST /api/account/favorites - Add favorite 3ms
+     ✓ 19. POST /api/account/favorites - Duplicate favorite 2ms
+     ✓ 20. GET /api/account/sessions - Fetch active sessions 2ms
+     ✓ 21. POST /api/account/2fa/enable - Gets QR code 3ms
+     ✓ 22. POST /api/account/2fa/verify - Invalid code 3ms
+     ✓ 23. PUT /api/account/privacy - Update privacy 2ms
+     ✓ 24. POST /api/account/avatar - Unauthenticated fails 2ms
+     ✓ 25. POST /api/account/avatar - Valid upload 17ms
+     ✓ 26. POST /api/account/export - Generates data 4ms
+     ✓ 27. DELETE /api/account - Missing confirmation 1ms
+     ✓ 28. DELETE /api/account - Incorrect password 110ms
+     × 29. DELETE /api/account - Success 114ms
+     × 30. GET /api/account/me - Fails after deletion 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/account.test.ts > Account Routes Test Suite > 29. DELETE /api/account - Success
+AssertionError: expected 500 to be 200 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 500[39m
+
+ ❯ tests/account.test.ts:258:24
+    256|       body: JSON.stringify({ password: 'newpassword123', confirmationS…
+    257|     }, env);
+    258|     expect(res.status).toBe(200);
+       |                        ^
+    259|   });
+    260|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  tests/account.test.ts > Account Routes Test Suite > 30. GET /api/account/me - Fails after deletion
+AssertionError: expected 200 to be 401 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 401[39m
+[31m+ 200[39m
+
+ ❯ tests/account.test.ts:266:24
+    264|       headers: { 'Authorization': `Bearer ${token}` }
+    265|     }, env);
+    266|     expect(res.status).toBe(401); // token valid, but middleware throw…
+       |                        ^
+    267|   });
+    268| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed | 20 passed (22)
+   Start at  20:24:24
+   Duration  1.53s (transform 161ms, setup 0ms, import 543ms, tests 748ms, environment 0ms)
+

@@ -1,0 +1,111 @@
+
+ RUN  v4.1.1 C:/Users/Précision/Desktop/ma vids/Pummel Party/SporKey/cloudflare-backend
+
+ ❯ tests/account.test.ts (22 tests | 4 failed) 400ms
+     ✓ 9. GET /api/account/me - Success 3ms
+     ✓ 10. PUT /api/account/profile - Update username 3ms
+     ✓ 11. PUT /api/account/profile - Email change sets pendingEmail 2ms
+     ✓ 12. PUT /api/account/profile - Duplicate data conflict 79ms
+     ✓ 13. PUT /api/account/password - Success 152ms
+     ✓ 14. PUT /api/account/password - Too short 1ms
+     ✓ 15. GET /api/account/notifications - Fetch defaults 2ms
+     ✓ 16. PUT /api/account/notifications - Update prefs 2ms
+     ✓ 17. PUT /api/account/feed-settings - Update defaults 2ms
+     ✓ 18. POST /api/account/favorites - Add favorite 2ms
+     ✓ 19. POST /api/account/favorites - Duplicate favorite 1ms
+     ✓ 20. GET /api/account/sessions - Fetch active sessions 1ms
+     ✓ 21. POST /api/account/2fa/enable - Gets QR code 3ms
+     ✓ 22. POST /api/account/2fa/verify - Invalid code 3ms
+     ✓ 23. PUT /api/account/privacy - Update privacy 2ms
+     ✓ 24. POST /api/account/avatar - Unauthenticated fails 1ms
+     ✓ 25. POST /api/account/avatar - Valid upload 13ms
+     ✓ 26. POST /api/account/export - Generates data 2ms
+     × 27. DELETE /api/account - Missing confirmation 7ms
+     × 28. DELETE /api/account - Incorrect password 1ms
+     × 29. DELETE /api/account - Success 1ms
+     × 30. GET /api/account/me - Fails after deletion 2ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/account.test.ts > Account Routes Test Suite > 27. DELETE /api/account - Missing confirmation
+AssertionError: expected 404 to be 400 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 400[39m
+[31m+ 404[39m
+
+ ❯ tests/account.test.ts:240:24
+    238|       body: JSON.stringify({ password: 'newpassword123', confirmationS…
+    239|     }, env);
+    240|     expect(res.status).toBe(400);
+       |                        ^
+    241|   });
+    242|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL  tests/account.test.ts > Account Routes Test Suite > 28. DELETE /api/account - Incorrect password
+AssertionError: expected 404 to be 400 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 400[39m
+[31m+ 404[39m
+
+ ❯ tests/account.test.ts:249:24
+    247|       body: JSON.stringify({ password: 'wrongpass', confirmationString…
+    248|     }, env);
+    249|     expect(res.status).toBe(400);
+       |                        ^
+    250|   });
+    251|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL  tests/account.test.ts > Account Routes Test Suite > 29. DELETE /api/account - Success
+AssertionError: expected 404 to be 200 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 200[39m
+[31m+ 404[39m
+
+ ❯ tests/account.test.ts:258:24
+    256|       body: JSON.stringify({ password: 'newpassword123', confirmationS…
+    257|     }, env);
+    258|     expect(res.status).toBe(200);
+       |                        ^
+    259|   });
+    260|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL  tests/account.test.ts > Account Routes Test Suite > 30. GET /api/account/me - Fails after deletion
+AssertionError: expected 200 to be 401 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 401[39m
+[31m+ 200[39m
+
+ ❯ tests/account.test.ts:266:24
+    264|       headers: { 'Authorization': `Bearer ${token}` }
+    265|     }, env);
+    266|     expect(res.status).toBe(401); // token valid, but middleware throw…
+       |                        ^
+    267|   });
+    268| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed | 18 passed (22)
+   Start at  20:20:41
+   Duration  1.29s (transform 183ms, setup 0ms, import 657ms, tests 400ms, environment 0ms)
+

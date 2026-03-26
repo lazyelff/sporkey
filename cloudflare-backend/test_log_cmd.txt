@@ -1,0 +1,116 @@
+
+ RUN  v4.1.1 C:/Users/Précision/Desktop/ma vids/Pummel Party/SporKey/cloudflare-backend
+
+ ❯ tests/auth.test.ts (8 tests | 5 failed) 272ms
+     × 1. POST /api/auth/register - Success 101ms
+     ✓ 2. POST /api/auth/register - Missing fields 2ms
+     ✓ 3. POST /api/auth/register - Minimum password length 1ms
+     × 4. POST /api/auth/register - Existing user conflict 4ms
+     × 5. POST /api/auth/login - Success 78ms
+     × 6. POST /api/auth/login - Non-existent email 2ms
+     × 7. POST /api/auth/login - Incorrect password 69ms
+     ✓ 8. POST /api/auth/login - Missing fields 1ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/auth.test.ts > Auth Routes Test Suite > 1. POST /api/auth/register - Success
+AssertionError: expected undefined to be true // Object.is equality
+
+[32m- Expected:[39m
+true
+
+[31m+ Received:[39m
+undefined
+
+ ❯ tests/auth.test.ts:30:26
+     28|     expect(res.status).toBe(201);
+     29|     const body: any = await res.json();
+     30|     expect(body.success).toBe(true);
+       |                          ^
+     31|     expect(body.data.token).toBeDefined();
+     32|     expect(body.data.user.username).toBe('testuser');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL  tests/auth.test.ts > Auth Routes Test Suite > 4. POST /api/auth/register - Existing user conflict
+AssertionError: expected 400 to be 409 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 409[39m
+[31m+ 400[39m
+
+ ❯ tests/auth.test.ts:61:24
+     59|       body: JSON.stringify({ username: 'testuser', email: 'test@exampl…
+     60|     }, env);
+     61|     expect(res.status).toBe(409);
+       |                        ^
+     62|   });
+     63|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL  tests/auth.test.ts > Auth Routes Test Suite > 5. POST /api/auth/login - Success
+AssertionError: expected undefined to be true // Object.is equality
+
+[32m- Expected:[39m
+true
+
+[31m+ Received:[39m
+undefined
+
+ ❯ tests/auth.test.ts:72:26
+     70|     expect(res.status).toBe(200);
+     71|     const body: any = await res.json();
+     72|     expect(body.success).toBe(true);
+       |                          ^
+     73|     expect(body.data.token).toBeDefined();
+     74|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL  tests/auth.test.ts > Auth Routes Test Suite > 6. POST /api/auth/login - Non-existent email
+AssertionError: expected 400 to be 401 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 401[39m
+[31m+ 400[39m
+
+ ❯ tests/auth.test.ts:82:24
+     80|       body: JSON.stringify({ email: 'doesnotexist@example.com', passwo…
+     81|     }, env);
+     82|     expect(res.status).toBe(401);
+       |                        ^
+     83|   });
+     84|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL  tests/auth.test.ts > Auth Routes Test Suite > 7. POST /api/auth/login - Incorrect password
+AssertionError: expected 400 to be 401 // Object.is equality
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 401[39m
+[31m+ 400[39m
+
+ ❯ tests/auth.test.ts:91:24
+     89|       body: JSON.stringify({ email: 'test@example.com', password: 'wro…
+     90|     }, env);
+     91|     expect(res.status).toBe(401);
+       |                        ^
+     92|   });
+     93|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  5 failed | 3 passed (8)
+   Start at  20:17:48
+   Duration  1.07s (transform 176ms, setup 0ms, import 571ms, tests 272ms, environment 0ms)
+

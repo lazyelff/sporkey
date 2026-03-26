@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1774291092694,
+      "tag": "0000_young_bloodstorm",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1774291461320,
+      "tag": "0001_gray_freak",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1774293886729,
+      "tag": "0002_polite_piledriver",
+      "breakpoints": true
+    }
+  ]
+}
