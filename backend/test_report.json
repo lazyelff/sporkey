@@ -1,5 +1,9 @@
 {
-  "passed": 6,
-  "failed": 0,
-  "errors": []
+  "passed": 1,
+  "failed": 5,
+  "errors": [
+    "TEST 1 FAILED: Expected status 200, got 401\n\n401 !== 200\n",
+    "TEST 2 FAILED: Expected status 400, got 401\n\n401 !== 400\n",
+    "TEST 3 FAILED: read ECONNRESET"
+  ]
 }
