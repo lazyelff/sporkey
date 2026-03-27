@@ -11,6 +11,7 @@ binding = "DB"
 database_name = "sporkey"
 database_id = "84866b5d-25d9-4207-84a6-a37571d5bc83"
 
-[[r2_buckets]]
-binding = "AVATARS_BUCKET"
-bucket_name = "avatars"
+# R2 bucket disabled - not available on account
+# [[r2_buckets]]
+# binding = "AVATARS_BUCKET"
+# bucket_name = "avatars"

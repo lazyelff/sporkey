@@ -2,7 +2,4 @@ name = "sporkey-frontend"
 compatibility_date = "2024-04-05"
 pages_build_output_dir = "build"
 
-[[d1_databases]]
-binding = "sporkey_db"
-database_name = "sporkey-db"
-database_id = "2fae3d2c-3133-40f4-9e09-abc96b35ae1a"
+# Frontend uses backend API - no D1 needed

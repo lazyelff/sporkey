@@ -5,7 +5,6 @@ import account from './routes/account';
 
 type Bindings = {
   DB: D1Database;
-  AVATARS_BUCKET: R2Bucket;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();

@@ -45,7 +45,7 @@ const leagues = [
     { id: 'champions', name: 'Champions League' },
 ];
 
-function Navbar({ user, onLogout, onOpenScoreboard, currentView, setCurrentView, selectedSport, onSelectSport, onSearch, showLeaguesDropdown, setShowLeaguesDropdown, theme, toggleTheme }) {
+function Navbar({ user, onLogout, onOpenScoreboard, currentView, setCurrentView, selectedSport, onSelectSport, onSearch, showLeaguesDropdown, setShowLeaguesDropdown, theme, toggleTheme, isMobileMenuOpen, onToggleMobileMenu }) {
     const navigate = useNavigate();
     const [showDropdown, setShowDropdown] = useState(false);
     const [showSearch, setShowSearch] = useState(false);
@@ -80,8 +80,21 @@ function Navbar({ user, onLogout, onOpenScoreboard, currentView, setCurrentView,
 
     return (
         <nav className="new-navbar">
-            <div className="new-navbar-logo" onClick={() => setCurrentView('home')}>
-                <img src={theme === 'light' ? '/images/logo-light.png' : '/images/logo-dark.png'} alt="Sporkey" />
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+                <button 
+                    className={`mobile-hamburger-btn ${isMobileMenuOpen ? 'open' : ''}`}
+                    onClick={() => onToggleMobileMenu(!isMobileMenuOpen)}
+                    aria-label="Open menu"
+                >
+                    <div className="hamburger-icon">
+                        <span className="hamburger-line"></span>
+                        <span className="hamburger-line"></span>
+                        <span className="hamburger-line"></span>
+                    </div>
+                </button>
+                <div className="new-navbar-logo" onClick={() => setCurrentView('home')}>
+                    <img src={theme === 'light' ? '/images/logo-light.png' : '/images/logo-dark.png'} alt="Sporkey" />
+                </div>
             </div>
             
             <div className="new-navbar-center">
@@ -393,6 +406,7 @@ function AppContent({ user, logout }) {
     const [selectedSport, setSelectedSport] = useState('football');
     const [selectedMatch, setSelectedMatch] = useState(null);
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [showLeaguesDropdown, setShowLeaguesDropdown] = useState(false);
     const { theme, toggleTheme, isDarkMode } = useTheme();
@@ -402,6 +416,7 @@ function AppContent({ user, logout }) {
     const [userAvatar, setUserAvatar] = useState('👤');
     const [userProfileImage, setUserProfileImage] = useState(null);
     const { notifications, addNotification, removeNotification } = useNotifications();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const loadMatches = async () => {
@@ -506,6 +521,8 @@ function AppContent({ user, logout }) {
                 setShowLeaguesDropdown={setShowLeaguesDropdown}
                 theme={theme}
                 toggleTheme={toggleTheme}
+                isMobileMenuOpen={isMobileMenuOpen}
+                onToggleMobileMenu={setIsMobileMenuOpen}
             />
             
             <Sidebar 
@@ -575,6 +592,117 @@ function AppContent({ user, logout }) {
             </main>
             
             <Scoreboard isOpen={showScoreboard} onClose={() => setShowScoreboard(false)} />
+            
+            {/* Mobile Bottom Sheet Drawer */}
+            <div 
+                className={`bottom-sheet-overlay ${isMobileMenuOpen ? 'open' : ''}`}
+                onClick={() => setIsMobileMenuOpen(false)}
+            />
+            <div className={`mobile-bottom-sheet ${isMobileMenuOpen ? 'open' : ''}`}>
+                <div className="bottom-sheet-header">
+                    <h3>Menu</h3>
+                    <button 
+                        className="bottom-sheet-close"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        ✕
+                    </button>
+                </div>
+                
+                {user?.id ? (
+                    <div className="mobile-user-section">
+                        <div className="mobile-user-avatar">
+                            {user?.username?.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="mobile-user-info">
+                            <div className="mobile-user-name">{user?.username}</div>
+                            <div className="mobile-user-role">{user?.role}</div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="mobile-user-section">
+                        <button 
+                            className="mobile-nav-item"
+                            onClick={() => { setIsMobileMenuOpen(false); navigate('/login'); }}
+                            style={{ width: '100%', background: 'linear-gradient(135deg, #6B21A8, #9333EA)' }}
+                        >
+                            <span className="nav-icon">🔑</span>
+                            <span className="nav-text">Login / Sign Up</span>
+                        </button>
+                    </div>
+                )}
+                
+                <div className="mobile-sidebar-section">
+                    <h4>Navigation</h4>
+                    <a 
+                        className={`mobile-nav-item ${currentView === 'home' ? 'active' : ''}`}
+                        onClick={() => { setCurrentView('home'); setIsMobileMenuOpen(false); }}
+                    >
+                        <span className="nav-icon">⚽</span>
+                        <span className="nav-text">Matches</span>
+                    </a>
+                    <a 
+                        className="mobile-nav-item"
+                        onClick={() => { setShowScoreboard(true); setIsMobileMenuOpen(false); }}
+                    >
+                        <span className="nav-icon">📊</span>
+                        <span className="nav-text">Scoreboard</span>
+                    </a>
+                    {user?.role === 'admin' && (
+                        <a 
+                            className="mobile-nav-item"
+                            onClick={() => { setCurrentView('admin'); setIsMobileMenuOpen(false); }}
+                        >
+                            <span className="nav-icon">⚙️</span>
+                            <span className="nav-text">Admin Dashboard</span>
+                        </a>
+                    )}
+                </div>
+                
+                <div className="mobile-sidebar-section">
+                    <h4>Sports</h4>
+                    {sportsList.map(sport => (
+                        <button
+                            key={sport.id}
+                            className={`mobile-nav-item ${selectedSport === sport.id ? 'active' : ''}`}
+                            onClick={() => { setSelectedSport(sport.id); setIsMobileMenuOpen(false); }}
+                        >
+                            <span className="nav-icon">🏆</span>
+                            <span className="nav-text">{sport.name}</span>
+                        </button>
+                    ))}
+                </div>
+                
+                <div className="mobile-sidebar-section">
+                    <h4>Account</h4>
+                    {user?.id && (
+                        <>
+                            <a 
+                                className="mobile-nav-item"
+                                onClick={() => { setIsMobileMenuOpen(false); navigate('/profile'); }}
+                            >
+                                <span className="nav-icon">👤</span>
+                                <span className="nav-text">My Profile</span>
+                            </a>
+                            <a 
+                                className="mobile-nav-item"
+                                onClick={() => { setIsMobileMenuOpen(false); navigate('/settings'); }}
+                            >
+                                <span className="nav-icon">🔧</span>
+                                <span className="nav-text">Settings</span>
+                            </a>
+                            <button 
+                                className="mobile-nav-item"
+                                onClick={() => { logout(); setIsMobileMenuOpen(false); }}
+                                style={{ color: '#ff6b6b' }}
+                            >
+                                <span className="nav-icon">🚪</span>
+                                <span className="nav-text">Logout</span>
+                            </button>
+                        </>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }

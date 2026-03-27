@@ -22,10 +22,11 @@ export const useAuth = () => {
         try {
             const result = await loginUser(email, password);
             console.log('API response:', result);
-            if (result.token && result.user) {
-                localStorage.setItem('currentUser', JSON.stringify(result.user));
-                localStorage.setItem('token', result.token);
-                setUser(result.user);
+            // Backend returns { success, data: { token, refreshToken, user } }
+            if (result.success && result.data?.token && result.data?.user) {
+                localStorage.setItem('currentUser', JSON.stringify(result.data.user));
+                localStorage.setItem('token', result.data.token);
+                setUser(result.data.user);
                 return { success: true };
             }
             return { success: false, error: result.message || 'Login failed - check credentials' };
@@ -51,8 +52,13 @@ export const useAuth = () => {
         try {
             await registerUser(username, email, password);
             // After successful registration, login automatically
-            return await login(email, password);
+            const loginResult = await login(email, password);
+            if (loginResult.success) {
+                return { success: true };
+            }
+            return { success: false, error: 'Registration succeeded but auto-login failed' };
         } catch (error) {
+            console.error('Registration error:', error);
             return { success: false, error: error.message || 'Registration failed' };
         }
     };
