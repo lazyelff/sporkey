@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import MatchList from './components/MatchList';
 import VideoPlayer from './components/VideoPlayer';
 import Scoreboard from './components/Scoreboard';
 import NotificationCenter from './components/NotificationCenter';
 import LoginPage from './pages/LoginPage';
 import AnimationDemo from './pages/AnimationDemo';
+import Scores from './pages/Scores';
+import Standings from './pages/Standings';
+import NotFound from './pages/NotFound';
 import UserProfile from './components/UserProfile';
 import AdminDashboard from './components/AdminDashboard';
 import AccountSettings from './components/AccountSettings';
@@ -14,6 +18,7 @@ import { useScoreTracker } from './hooks/useScoreTracker';
 import { useAuth } from './hooks/useAuth';
 import { useTheme } from './hooks/useTheme';
 import { fetchMatches, sendHeartbeat, fetchTeamLogo } from './services/api';
+import { pageVariants } from './utils/animations';
 
 const initializeDemoUser = () => {
     const existingUsers = localStorage.getItem('users');
@@ -141,6 +146,8 @@ function Navbar({ user, onLogout, onOpenScoreboard, currentView, setCurrentView,
                     )}
                 </div>
                 <a className="active" href="#">Live Now</a>
+                <a onClick={() => navigate('/scores')}>Scores</a>
+                <a onClick={() => navigate('/standings')}>Standings</a>
             </div>
             
             <div className="new-navbar-right">
@@ -418,6 +425,7 @@ function AppContent({ user, logout }) {
     const [userProfileImage, setUserProfileImage] = useState(null);
     const { notifications, addNotification, removeNotification } = useNotifications();
     const navigate = useNavigate();
+    const [showStream, setShowStream] = useState(false);
 
     useEffect(() => {
         const loadMatches = async () => {
@@ -496,10 +504,7 @@ function AppContent({ user, logout }) {
     ];
 
     const handleWatchMatch = () => {
-        if (!user?.id) {
-            return;
-        }
-        setCurrentView('video');
+        setShowStream(true);
     };
 
     return (
@@ -534,16 +539,16 @@ function AppContent({ user, logout }) {
             />
             
             <main className={`new-main-content ${sidebarCollapsed ? 'expanded' : ''}`}>
-                <HeroSection 
-                    match={selectedMatch || liveMatches[0]} 
-                    onWatchMatch={handleWatchMatch}
-                />
-                
-                {currentView === 'home' && (
-                    <>
-                        <MatchList sport={selectedSport} onSelectMatch={setSelectedMatch} searchTerm={searchTerm} />
+                {showStream ? (
+                    <div className="stream-container">
+                        <button 
+                            className="close-stream-btn"
+                            onClick={() => setShowStream(false)}
+                        >
+                            ← Back to Preview
+                        </button>
                         <VideoPlayer 
-                            match={selectedMatch}
+                            match={selectedMatch || liveMatches[0]}
                             totalPoints={totalPoints}
                             user={user}
                             onPointsChange={() => {
@@ -553,7 +558,16 @@ function AppContent({ user, logout }) {
                                 }
                             }}
                         />
-                    </>
+                    </div>
+                ) : (
+                    <HeroSection 
+                        match={selectedMatch || liveMatches[0]} 
+                        onWatchMatch={handleWatchMatch}
+                    />
+                )}
+                
+                {(currentView === 'home' || showStream) && (
+                    <MatchList sport={selectedSport} onSelectMatch={setSelectedMatch} searchTerm={searchTerm} />
                 )}
                 
                 {currentView === 'video' && (
@@ -648,6 +662,18 @@ function AppContent({ user, logout }) {
                     >
                         <span className="nav-icon">📊</span>
                         <span className="nav-text">Scoreboard</span>
+                    </a>
+                    <a 
+                        className="mobile-nav-item"
+                        onClick={() => { navigate('/scores'); setIsMobileMenuOpen(false); }}
+                    >
+                        Scores
+                    </a>
+                    <a 
+                        className="mobile-nav-item"
+                        onClick={() => { navigate('/standings'); setIsMobileMenuOpen(false); }}
+                    >
+                        Standings
                     </a>
                     {user?.role === 'admin' && (
                         <a 
@@ -758,30 +784,55 @@ function App() {
     }
 
     return (
-        <Routes>
-            <Route path="/login" element={user?.id ? <Navigate to="/" replace /> : <LoginPage />} />
-            <Route path="/animation-demo" element={<AnimationDemo />} />
-            <Route path="/" element={
-                <AppContent user={user} logout={logout} />
-            } />
-            <Route path="/profile" element={
-                <ProtectedRoute user={user}>
-                    <UserProfile user={user} totalPoints={parseInt(localStorage.getItem(`userPoints_${user?.id}`)) || 0} onBack={() => window.history.back()} />
-                </ProtectedRoute>
-            } />
-            <Route path="/settings" element={
-                <ProtectedRoute user={user}>
-                    <AccountSettings
-                        user={user}
-                        onBack={() => window.history.back()}
-                        onAccountDeleted={() => {
-                            logout();
-                            navigate('/login');
-                        }}
-                    />
-                </ProtectedRoute>
-            } />
-        </Routes>
+        <AnimatePresence mode="wait">
+            <Routes>
+                <Route path="/login" element={user?.id ? <Navigate to="/" replace /> : <LoginPage />} />
+                <Route path="/animation-demo" element={<AnimationDemo />} />
+                <Route path="/scores" element={
+                    <motion.div
+                        key="scores"
+                        variants={pageVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                    >
+                        <Scores />
+                    </motion.div>
+                } />
+                <Route path="/standings" element={
+                    <motion.div
+                        key="standings"
+                        variants={pageVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                    >
+                        <Standings />
+                    </motion.div>
+                } />
+                <Route path="/" element={
+                    <AppContent user={user} logout={logout} />
+                } />
+                <Route path="/profile" element={
+                    <ProtectedRoute user={user}>
+                        <UserProfile user={user} totalPoints={parseInt(localStorage.getItem(`userPoints_${user?.id}`)) || 0} onBack={() => window.history.back()} />
+                    </ProtectedRoute>
+                } />
+                <Route path="/settings" element={
+                    <ProtectedRoute user={user}>
+                        <AccountSettings
+                            user={user}
+                            onBack={() => window.history.back()}
+                            onAccountDeleted={() => {
+                                logout();
+                                navigate('/login');
+                            }}
+                        />
+                    </ProtectedRoute>
+                } />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </AnimatePresence>
     );
 }
 

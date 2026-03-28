@@ -1,0 +1,122 @@
+.not-found-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0f0f1a 100%);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.not-found-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(107, 33, 168, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(107, 33, 168, 0.1) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.not-found-content {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    max-width: 500px;
+}
+
+.not-found-code {
+    font-size: 10rem;
+    font-weight: 800;
+    margin: 0;
+    background: linear-gradient(135deg, #6B21A8, #9333EA);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    font-family: 'League Spartan', sans-serif;
+    text-shadow: 0 0 60px rgba(107, 33, 168, 0.5);
+}
+
+.not-found-title {
+    font-size: 2rem;
+    color: #ffffff;
+    margin: 16px 0 12px 0;
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+}
+
+.not-found-text {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0 0 32px 0;
+    font-family: 'League Spartan', sans-serif;
+    line-height: 1.6;
+}
+
+.not-found-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.not-found-btn {
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-family: 'League Spartan', sans-serif;
+}
+
+.not-found-btn.primary {
+    background: linear-gradient(135deg, #6B21A8, #9333EA);
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 20px rgba(107, 33, 168, 0.4);
+}
+
+.not-found-btn.primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(107, 33, 168, 0.5);
+}
+
+.not-found-btn.secondary {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.not-found-btn.secondary:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 480px) {
+    .not-found-code {
+        font-size: 6rem;
+    }
+
+    .not-found-title {
+        font-size: 1.5rem;
+    }
+
+    .not-found-text {
+        font-size: 1rem;
+    }
+
+    .not-found-actions {
+        flex-direction: column;
+    }
+
+    .not-found-btn {
+        width: 100%;
+    }
+}

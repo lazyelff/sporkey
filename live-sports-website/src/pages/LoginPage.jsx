@@ -1,10 +1,27 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../hooks/useAuth';
 import '../styles/Login.css';
 
+const pageTransition = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.3 } }
+};
+
+const formVariants = {
+    initial: { opacity: 0, x: -20 },
+    animate: { opacity: 1, x: 0, transition: { duration: 0.4 } },
+    exit: { opacity: 0, x: 20, transition: { duration: 0.3 } }
+};
+
+const inputVariants = {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.3 } }
+};
+
 function LoginPage() {
-    const navigate = useNavigate();
     const { login, register } = useAuth();
     const [isRegistering, setIsRegistering] = useState(false);
     const [formData, setFormData] = useState({
@@ -18,10 +35,7 @@ function LoginPage() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
+        setFormData(prev => ({ ...prev, [name]: value }));
         setError('');
     };
 
@@ -57,6 +71,12 @@ function LoginPage() {
         }
     };
 
+    const toggleMode = () => {
+        setIsRegistering(!isRegistering);
+        setError('');
+        setFormData({ username: '', email: '', password: '', confirmPassword: '' });
+    };
+
     return (
         <div className="login-page">
             <div className="login-page-bg">
@@ -65,114 +85,224 @@ function LoginPage() {
                 <div className="bg-glow"></div>
             </div>
             
-            <div className="login-page-container">
-                <div className="login-promo-section animate-subtle">
-                    <Link to="/" className="promo-logo-link">
-                        <img src="/images/logo-dark.png" alt="SporKey Logo" className="promo-logo" />
+            <motion.div 
+                className="login-split-container"
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
+            >
+                <motion.div 
+                    className="login-promo-side"
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: 0.1 }}
+                >
+                    <Link to="/" className="promo-logo-clickable">
+                        <img src="/images/logo-dark.png" alt="SporKey" className="promo-main-logo" />
                     </Link>
-                    <div className="promo-text-content">
-                        <h1 className="promo-heading animate-subtle-up animate-delay-1">
-                            SPORKEY YOUR ULTIMATE DESTINATION FOR LIVE SPORTS STREAMING
-                        </h1>
-                        <p className="promo-subheading animate-subtle-up animate-delay-2">
-                            WATCH EVERY MATCH, FOLLOW YOUR FAVORITE TEAMS AND NEVER MISS A MOMENT OF THE ACTION.
-                        </p>
-                    </div>
-                </div>
+                    <motion.h1 
+                        className="promo-heading"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        Your Ultimate Destination for Live Sports Streaming
+                    </motion.h1>
+                    <motion.p 
+                        className="promo-description"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.3 }}
+                    >
+                        Watch every match, follow your favorite teams, and never miss a moment of the action.
+                    </motion.p>
+                </motion.div>
 
-                <div className="login-panel animate-subtle-up animate-delay-3">
-                    <form key={isRegistering ? 'register' : 'login'} onSubmit={handleSubmit} className="custom-login-form">
-                        <img 
-                            src="/images/logo-s.png" 
-                            alt="Sporkey Logo" 
-                            className="login-panel-logo"
-                            style={{ width: '400px', height: 'auto', display: 'block', margin: '0 auto 15px auto' }}
-                        />
-                        <h2 className="panel-title">{isRegistering ? 'Create Account' : 'Login'}</h2>
-                        
-                        {error && <div className="panel-error">{error}</div>}
+                <motion.div 
+                    className="login-card"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                    <Link to="/" className="login-logo-link">
+                        <img src="/images/logo-s.png" alt="SporKey" className="login-card-logo" />
+                    </Link>
 
-                        {isRegistering && (
-                            <div className="panel-input-wrapper">
+                    <motion.h1 
+                        className="login-title"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.2 }}
+                    >
+                        {isRegistering ? 'Join SporKey' : 'Welcome Back'}
+                    </motion.h1>
+
+                    <motion.p 
+                        className="login-subtitle"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.25 }}
+                    >
+                        {isRegistering ? 'Create your account to start streaming' : 'Sign in to continue watching'}
+                    </motion.p>
+
+                    <AnimatePresence mode="wait">
+                        <motion.form 
+                            key={isRegistering ? 'register' : 'login'}
+                            onSubmit={handleSubmit} 
+                            className="login-form"
+                            variants={formVariants}
+                            initial="initial"
+                            animate="animate"
+                            exit="exit"
+                        >
+                            <AnimatePresence>
+                                {isRegistering && (
+                                    <motion.div 
+                                        className="input-group"
+                                        variants={inputVariants}
+                                        initial="initial"
+                                        animate="animate"
+                                        exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
+                                    >
+                                        <input
+                                            type="text"
+                                            name="username"
+                                            placeholder="Username"
+                                            value={formData.username}
+                                            onChange={handleInputChange}
+                                            required={isRegistering}
+                                            className="login-input"
+                                        />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+
+                            <motion.div 
+                                className="input-group"
+                                variants={inputVariants}
+                                initial="initial"
+                                animate="animate"
+                                transition={{ delay: isRegistering ? 0.1 : 0.05 }}
+                            >
                                 <input
-                                    type="text"
-                                    name="username"
-                                    placeholder="Username"
-                                    value={formData.username}
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email"
+                                    value={formData.email}
                                     onChange={handleInputChange}
-                                    required={isRegistering}
+                                    required
+                                    className="login-input"
                                 />
-                            </div>
-                        )}
-                        
-                        <div className="panel-input-wrapper">
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-                        
-                        <div className="panel-input-wrapper">
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="Password"
-                                value={formData.password}
-                                onChange={handleInputChange}
-                                required
-                            />
-                        </div>
-                        
-                        {isRegistering && (
-                            <div className="panel-input-wrapper">
+                            </motion.div>
+
+                            <motion.div 
+                                className="input-group"
+                                variants={inputVariants}
+                                initial="initial"
+                                animate="animate"
+                                transition={{ delay: isRegistering ? 0.15 : 0.1 }}
+                            >
                                 <input
                                     type="password"
-                                    name="confirmPassword"
-                                    placeholder="Confirm Password"
-                                    value={formData.confirmPassword}
+                                    name="password"
+                                    placeholder="Password"
+                                    value={formData.password}
                                     onChange={handleInputChange}
-                                    required={isRegistering}
+                                    required
+                                    className="login-input"
                                 />
-                            </div>
-                        )}
+                            </motion.div>
 
-                        <button type="submit" className="panel-submit-btn" disabled={loading}>
-                            {loading ? 'Processing...' : 'Enter'}
-                        </button>
-                        
-                        <div className="panel-footer-links">
-                            <button 
-                                type="button" 
-                                className="panel-toggle-btn"
-                                onClick={() => {
-                                    setIsRegistering(!isRegistering);
-                                    setError('');
-                                    setFormData({ username: '', email: '', password: '', confirmPassword: '' });
-                                }}
-                            >
-                                {isRegistering ? 'Login' : 'Create Account'}
-                            </button>
-
-                            {!isRegistering && (
-                                <>
-                                    <span className="footer-divider">|</span>
-                                    <button 
-                                        type="button" 
-                                        className="panel-toggle-btn"
-                                        onClick={() => alert("Forgot Password flow hasn't been implemented yet.")}
+                            <AnimatePresence>
+                                {isRegistering && (
+                                    <motion.div 
+                                        className="input-group"
+                                        variants={inputVariants}
+                                        initial="initial"
+                                        animate="animate"
+                                        exit={{ opacity: 0, y: -10, transition: { duration: 0.2 } }}
                                     >
-                                        Forgot Password?
-                                    </button>
-                                </>
+                                        <input
+                                            type="password"
+                                            name="confirmPassword"
+                                            placeholder="Confirm Password"
+                                            value={formData.confirmPassword}
+                                            onChange={handleInputChange}
+                                            required={isRegistering}
+                                            className="login-input"
+                                        />
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+
+                            {error && (
+                                <motion.div 
+                                    className="login-error"
+                                    initial={{ opacity: 0, y: -5 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                >
+                                    {error}
+                                </motion.div>
                             )}
-                        </div>
-                    </form>
-                </div>
-            </div>
+
+                            <motion.button 
+                                type="submit" 
+                                className="login-submit-btn" 
+                                disabled={loading}
+                                whileHover={{ scale: 1.02, boxShadow: '0 4px 20px rgba(107, 33, 168, 0.4)' }}
+                                whileTap={{ scale: 0.98 }}
+                            >
+                                {loading ? 'Please wait...' : isRegistering ? 'Create Account' : 'Sign In'}
+                            </motion.button>
+                        </motion.form>
+                    </AnimatePresence>
+
+                    <motion.div 
+                        className="login-footer"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                    >
+                        <button 
+                            type="button" 
+                            className="login-toggle-link"
+                            onClick={toggleMode}
+                        >
+                            {isRegistering ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
+                        </button>
+
+                        {!isRegistering && (
+                            <>
+                                <span className="login-divider">•</span>
+                                <button 
+                                    type="button" 
+                                    className="login-toggle-link"
+                                    onClick={() => alert("Forgot Password feature coming soon")}
+                                >
+                                    Forgot Password?
+                                </button>
+                            </>
+                        )}
+                    </motion.div>
+
+                    <motion.div 
+                        className="guest-btn-under-panel"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                    >
+                        <button 
+                            type="button" 
+                            className="guest-enter-btn-new"
+                            onClick={() => window.location.href = '/'}
+                        >
+                            Enter as Guest
+                        </button>
+                    </motion.div>
+                </motion.div>
+            </motion.div>
         </div>
     );
 }

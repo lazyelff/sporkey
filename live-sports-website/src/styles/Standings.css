@@ -1,0 +1,387 @@
+.standings-page {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+.back-to-home {
+    background: var(--accent, #6B21A8);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-family: 'League Spartan', sans-serif;
+    transition: transform 0.2s ease;
+}
+
+.back-to-home:hover {
+    transform: scale(1.02);
+}
+
+.standings-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.standings-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    background: linear-gradient(135deg, #fff, #6B21A8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.standings-subtitle {
+    color: var(--text-secondary, #acaaae);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* League Selector */
+.league-selector {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.league-tab {
+    padding: 12px 24px;
+    border: 1px solid rgba(107, 33, 168, 0.3);
+    background: rgba(107, 33, 168, 0.1);
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'League Spartan', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.league-tab:hover {
+    background: rgba(107, 33, 168, 0.2);
+    border-color: #6B21A8;
+    transform: translateY(-2px);
+}
+
+.league-tab.active {
+    background: linear-gradient(135deg, #6B21A8, #9333EA);
+    border-color: #6B21A8;
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(107, 33, 168, 0.4);
+}
+
+/* Standings Table */
+.standings-table {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(107, 33, 168, 0.2);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.table-header {
+    display: grid;
+    grid-template-columns: 50px 1fr 40px 40px 40px 40px 50px 50px 120px;
+    gap: 8px;
+    padding: 16px 20px;
+    background: rgba(107, 33, 168, 0.15);
+    border-bottom: 1px solid rgba(107, 33, 168, 0.2);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.table-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 40px 40px 40px 40px 50px 50px 120px;
+    gap: 8px;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    align-items: center;
+    transition: background 0.2s ease;
+    cursor: pointer;
+}
+
+.table-row:last-child {
+    border-bottom: none;
+}
+
+.table-row:hover {
+    background: rgba(107, 33, 168, 0.1);
+}
+
+.table-row.position-gold {
+    background: linear-gradient(90deg, rgba(251, 191, 36, 0.15), transparent);
+}
+
+.table-row.position-silver {
+    background: linear-gradient(90deg, rgba(148, 163, 184, 0.15), transparent);
+}
+
+.table-row.position-bronze {
+    background: linear-gradient(90deg, rgba(180, 83, 9, 0.15), transparent);
+}
+
+/* Column Styles */
+.col-pos {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+    text-align: center;
+}
+
+.position-badge {
+    font-size: 1.2rem;
+}
+
+.col-team {
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.team-icon {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #6B21A8, #9333EA);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.col-played,
+.col-won,
+.col-drawn,
+.col-lost {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+
+.col-gd {
+    text-align: center;
+    font-weight: 600;
+}
+
+.col-gd.positive {
+    color: #22c55e;
+}
+
+.col-gd.negative {
+    color: #ef4444;
+}
+
+.col-pts {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #6B21A8;
+}
+
+.table-row.position-gold .col-pts,
+.table-row.position-silver .col-pts,
+.table-row.position-bronze .col-pts {
+    color: #fff;
+}
+
+/* Form */
+.col-form {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+}
+
+.form-result {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.form-win {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.form-draw {
+    background: rgba(251, 191, 36, 0.2);
+    color: #fbbf24;
+}
+
+.form-loss {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+/* Legend */
+.standings-legend {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.legend-dot.gold {
+    background: #fbbf24;
+}
+
+.legend-dot.silver {
+    background: #94a3b8;
+}
+
+.legend-dot.green {
+    background: #22c55e;
+}
+
+/* Skeleton Loading */
+.standings-table-skeleton {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.skeleton-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 40px 40px 40px 40px 50px 50px 120px;
+    gap: 8px;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.skeleton-cell {
+    height: 20px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgba(107,33,168,0.1) 25%, rgba(107,33,168,0.2) 50%, rgba(107,33,168,0.1) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+/* Light Mode */
+[data-theme="light"] .standings-header h1 {
+    background: linear-gradient(135deg, #0a0a0a, #6B21A8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .standings-subtitle {
+    color: #6b7280;
+}
+
+[data-theme="light"] .league-tab {
+    background: rgba(107, 33, 168, 0.08);
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .league-tab:hover {
+    background: rgba(107, 33, 168, 0.15);
+}
+
+[data-theme="light"] .league-tab.active {
+    color: #fff;
+}
+
+[data-theme="light"] .standings-table,
+[data-theme="light"] .standings-table-skeleton {
+    background: #fff;
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .table-header {
+    background: rgba(107, 33, 168, 0.08);
+    color: #6b7280;
+}
+
+[data-theme="light"] .table-row {
+    border-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .table-row:hover {
+    background: rgba(107, 33, 168, 0.05);
+}
+
+[data-theme="light"] .col-pos,
+[data-theme="light"] .col-team {
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .col-played,
+[data-theme="light"] .col-won,
+[data-theme="light"] .col-drawn,
+[data-theme="light"] .col-lost {
+    color: #6b7280;
+}
+
+[data-theme="light"] .team-icon {
+    background: linear-gradient(135deg, #6B21A8, #9333EA);
+    color: #fff;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .standings-page {
+        padding: 16px;
+    }
+    
+    .standings-header h1 {
+        font-size: 2rem;
+    }
+    
+    .league-selector {
+        gap: 6px;
+    }
+    
+    .league-tab {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+    }
+    
+    .standings-table {
+        overflow-x: auto;
+    }
+    
+    .table-header,
+    .table-row {
+        min-width: 600px;
+    }
+    
+    .standings-legend {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+}
