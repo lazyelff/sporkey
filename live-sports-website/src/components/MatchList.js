@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { fetchMatches, getFavorites, addFavorite, removeFavorite } from '../services/api';
+import { useAuth } from '../hooks/useAuth';
 
 // Constants moved outside component to prevent recreation
 const CHAMPIONS_LEAGUE_KEYWORDS = ['champions league', 'ucl', 'c1', 'european cup'];
@@ -295,25 +296,34 @@ const MatchList = ({ sport, onSelectMatch, user, searchTerm = '' }) => {
         return `https://streamed.pk${poster}.webp`;
     };
 
-    const UpcomingMatchCard = ({ match }) => {
+    const UpcomingMatchCard = ({ match, animationDelay = 0 }) => {
         const homeTeam = match.teams?.home?.name || 'Team A';
         const awayTeam = match.teams?.away?.name || 'Team B';
         const poster = getPosterUrl(match.poster);
         const time = match.date ? new Date(match.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
         const timeUntil = getTimeUntilMatch(match.date);
+        
+        const getDelayClass = () => {
+            if (animationDelay <= 0) return 'animate-subtle-up';
+            if (animationDelay === 1) return 'animate-subtle-up animate-delay-1';
+            if (animationDelay === 2) return 'animate-subtle-up animate-delay-2';
+            return 'animate-subtle-up animate-delay-3';
+        };
 
         return (
             <div 
-                className="match-card upcoming-match-card"
+                className="match-card upcoming-match-card animate-hover-lift"
                 onClick={() => onSelectMatch(match)}
             >
                 <div className="match-card-image">
                     {poster ? (
                         <>
                             <img src={poster} alt={match.title} />
-                            <button className="favorite-btn" onClick={(e) => toggleFavorite(e, match.id)} style={{position: 'absolute', top: 10, left: 10, background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', zIndex: 10}}>
-                                {favorites.includes(match.id) ? '⭐' : '☆'}
-                            </button>
+                            {user?.id && (
+                                <button className="favorite-btn" onClick={(e) => toggleFavorite(e, match.id)} style={{position: 'absolute', top: 10, left: 10, background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', zIndex: 10}}>
+                                    {favorites.includes(match.id) ? '⭐' : '☆'}
+                                </button>
+                            )}
                         </>
                     ) : (
                         <div className="match-card-placeholder">
@@ -336,15 +346,24 @@ const MatchList = ({ sport, onSelectMatch, user, searchTerm = '' }) => {
         );
     };
 
-    const MatchCard = ({ match, isPremium, category, league }) => {
+    const MatchCard = ({ match, isPremium, category, league, animationDelay = 0 }) => {
         const homeTeam = match.teams?.home?.name || 'Team A';
         const awayTeam = match.teams?.away?.name || 'Team B';
         const poster = getPosterUrl(match.poster);
         const time = match.date ? new Date(match.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+        
+        const getDelayClass = () => {
+            if (animationDelay <= 0) return 'animate-subtle-up';
+            if (animationDelay === 1) return 'animate-subtle-up animate-delay-1';
+            if (animationDelay === 2) return 'animate-subtle-up animate-delay-2';
+            if (animationDelay === 3) return 'animate-subtle-up animate-delay-3';
+            if (animationDelay === 4) return 'animate-subtle-up animate-delay-4';
+            return 'animate-subtle-up animate-delay-5';
+        };
 
         return (
             <div 
-                className={`match-card ${isPremium ? 'premium-match' : ''}`}
+                className={`match-card ${isPremium ? 'premium-match' : ''} animate-hover-lift ${getDelayClass()}`}
                 onClick={() => onSelectMatch(match)}
                 style={isPremium ? { borderLeftColor: getLeagueColor(category) } : {}}
             >
@@ -354,9 +373,11 @@ const MatchList = ({ sport, onSelectMatch, user, searchTerm = '' }) => {
                     </div>
                 )}
                 <div className="match-card-image">
-                    <button className="favorite-btn" onClick={(e) => toggleFavorite(e, match.id)} style={{position: 'absolute', top: 10, left: 10, background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', zIndex: 10}}>
-                        {favorites.includes(match.id) ? '⭐' : '☆'}
-                    </button>
+                    {user?.id && (
+                        <button className="favorite-btn" onClick={(e) => toggleFavorite(e, match.id)} style={{position: 'absolute', top: 10, left: 10, background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', zIndex: 10}}>
+                            {favorites.includes(match.id) ? '⭐' : '☆'}
+                        </button>
+                    )}
                     {poster ? (
                         <img src={poster} alt={match.title} />
                     ) : (
@@ -395,8 +416,8 @@ const MatchList = ({ sport, onSelectMatch, user, searchTerm = '' }) => {
             {/* Up Next Section - ALWAYS ON TOP */}
             {upcomingMatches.length > 0 && (
                 <MatchSection title="⏱️ Up Next" matchCount={upcomingMatches.length}>
-                    {upcomingMatches.map((match) => (
-                        <UpcomingMatchCard key={match.id} match={match} />
+                    {upcomingMatches.map((match, index) => (
+                        <UpcomingMatchCard key={match.id} match={match} animationDelay={index} />
                     ))}
                 </MatchSection>
             )}
@@ -404,12 +425,13 @@ const MatchList = ({ sport, onSelectMatch, user, searchTerm = '' }) => {
             {/* Champions League Section - ALWAYS ON TOP */}
             {championsLeagueMatches.length > 0 && (
                 <MatchSection title="👑 UEFA Champions League" matchCount={championsLeagueMatches.length}>
-                    {championsLeagueMatches.map((match) => (
+                    {championsLeagueMatches.map((match, index) => (
                         <MatchCard 
                             key={match.id} 
                             match={match} 
                             isPremium={true}
                             category="Champions League"
+                            animationDelay={index}
                         />
                     ))}
                 </MatchSection>
@@ -418,12 +440,13 @@ const MatchList = ({ sport, onSelectMatch, user, searchTerm = '' }) => {
             {/* Top 5 Leagues Section */}
             {topLeagueMatches.length > 0 && (
                 <MatchSection title="🏆 Top 5 Leagues" matchCount={topLeagueMatches.length}>
-                    {topLeagueMatches.map((match) => (
+                    {topLeagueMatches.map((match, index) => (
                         <MatchCard 
                             key={match.id} 
                             match={match} 
                             isPremium={true}
                             category={getLeagueFromTitle(match.title)}
+                            animationDelay={index}
                         />
                     ))}
                 </MatchSection>
@@ -432,11 +455,12 @@ const MatchList = ({ sport, onSelectMatch, user, searchTerm = '' }) => {
             {/* Other Matches Section */}
             {otherMatches.length > 0 && (
                 <MatchSection title="🎯 More Matches" matchCount={otherMatches.length}>
-                    {otherMatches.map((match) => (
+                    {otherMatches.map((match, index) => (
                         <MatchCard 
                             key={match.id} 
                             match={match} 
                             isPremium={false}
+                            animationDelay={index}
                         />
                     ))}
                 </MatchSection>

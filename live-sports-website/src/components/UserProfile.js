@@ -188,14 +188,14 @@ const UserProfile = ({ user, totalPoints, onBack }) => {
 
     return (
         <div className="profile-container">
-            <div className="profile-header">
+            <div className="profile-header animate-subtle">
                 <button className="back-btn" onClick={onBack}>
                     ← Back to Matches
                 </button>
             </div>
             
             <div className="profile-content">
-                <div className="profile-card">
+                <div className="profile-card animate-subtle-up animate-delay-1">
                     <div className="user-info">
                         <div className="profile-top-section">
                             <div className="avatar-section">

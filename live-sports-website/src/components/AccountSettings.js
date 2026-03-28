@@ -372,7 +372,7 @@ const AccountSettings = ({ user, onBack, onAccountDeleted }) => {
 
     return (
         <div className="settings-container">
-            <div className="settings-header">
+            <div className="settings-header animate-subtle">
                 <h2>Account Settings</h2>
                 <button className="back-btn" onClick={onBack}>
                     ← Back to Matches
@@ -381,7 +381,7 @@ const AccountSettings = ({ user, onBack, onAccountDeleted }) => {
 
             <div className="settings-content">
                 {/* Profile Section */}
-                <div className="settings-card">
+                <div className="settings-card animate-subtle-up animate-delay-1">
                     <h3>Profile Information</h3>
                     
                     {profileStatus.error && <div className="settings-alert error">{profileStatus.error}</div>}

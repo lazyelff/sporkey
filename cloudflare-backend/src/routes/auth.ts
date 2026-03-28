@@ -16,9 +16,9 @@ type Bindings = {
 import { rateLimiter } from '../middleware/rateLimiter';
 
 const auth = new Hono<{ Bindings: Bindings }>();
-// Rate limiter disabled for testing
-// auth.use('/register', rateLimiter(15 * 60 * 1000, 10));
-// auth.use('/login', rateLimiter(15 * 60 * 1000, 10));
+// Rate limiter: 20 requests per 15 minutes
+auth.use('/register', rateLimiter(15 * 60 * 1000, 20));
+auth.use('/login', rateLimiter(15 * 60 * 1000, 20));
 
 // Helper for Web Crypto SHA-256
 async function sha256(message: string) {

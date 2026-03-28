@@ -66,21 +66,21 @@ function LoginPage() {
             </div>
             
             <div className="login-page-container">
-                <div className="login-promo-section">
+                <div className="login-promo-section animate-subtle">
                     <Link to="/" className="promo-logo-link">
                         <img src="/images/logo-dark.png" alt="SporKey Logo" className="promo-logo" />
                     </Link>
                     <div className="promo-text-content">
-                        <h1 className="promo-heading">
+                        <h1 className="promo-heading animate-subtle-up animate-delay-1">
                             SPORKEY YOUR ULTIMATE DESTINATION FOR LIVE SPORTS STREAMING
                         </h1>
-                        <p className="promo-subheading">
+                        <p className="promo-subheading animate-subtle-up animate-delay-2">
                             WATCH EVERY MATCH, FOLLOW YOUR FAVORITE TEAMS AND NEVER MISS A MOMENT OF THE ACTION.
                         </p>
                     </div>
                 </div>
 
-                <div className="login-panel">
+                <div className="login-panel animate-subtle-up animate-delay-3">
                     <form key={isRegistering ? 'register' : 'login'} onSubmit={handleSubmit} className="custom-login-form">
                         <img 
                             src="/images/logo-s.png" 

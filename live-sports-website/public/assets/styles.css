@@ -28,6 +28,157 @@
     --font-xl: 1.25rem;
     --font-2xl: 1.5rem;
     --font-3xl: 1.875rem;
+
+    /* Animation Timing */
+    --anim-duration: 0.5s;
+    --anim-ease: ease-out;
+}
+
+/* ==================== SUBTLE ANIMATIONS ==================== */
+
+@keyframes subtleFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes subtleFadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes subtleFadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes subtleSlideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes subtleSlideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes subtleFadeInSlow {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes subtlePulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* Subtle Animation Utility Classes */
+.animate-subtle {
+    animation: subtleFadeIn var(--anim-duration) var(--anim-ease) forwards;
+}
+
+.animate-subtle-up {
+    animation: subtleFadeInUp var(--anim-duration) var(--anim-ease) forwards;
+}
+
+.animate-subtle-scale {
+    animation: subtleFadeInScale var(--anim-duration) var(--anim-ease) forwards;
+}
+
+.animate-subtle-left {
+    animation: subtleSlideInLeft var(--anim-duration) var(--anim-ease) forwards;
+}
+
+.animate-subtle-right {
+    animation: subtleSlideInRight var(--anim-duration) var(--anim-ease) forwards;
+}
+
+.animate-subtle-slow {
+    animation: subtleFadeInSlow 0.8s ease-in-out forwards;
+}
+
+@keyframes subtleFadeInOverlay {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade-in {
+    animation: subtleFadeInOverlay var(--anim-duration) var(--anim-ease) forwards;
+}
+
+/* Staggered Delays */
+.animate-delay-1 { animation-delay: 0.1s; opacity: 0; }
+.animate-delay-2 { animation-delay: 0.2s; opacity: 0; }
+.animate-delay-3 { animation-delay: 0.3s; opacity: 0; }
+.animate-delay-4 { animation-delay: 0.4s; opacity: 0; }
+.animate-delay-5 { animation-delay: 0.5s; opacity: 0; }
+.animate-delay-6 { animation-delay: 0.6s; opacity: 0; }
+
+/* Combined utility */
+.animate-subtle-up.animate-delay-1 { animation: subtleFadeInUp var(--anim-duration) var(--anim-ease) 0.1s forwards; }
+.animate-subtle-up.animate-delay-2 { animation: subtleFadeInUp var(--anim-duration) var(--anim-ease) 0.2s forwards; }
+.animate-subtle-up.animate-delay-3 { animation: subtleFadeInUp var(--anim-duration) var(--anim-ease) 0.3s forwards; }
+.animate-subtle-up.animate-delay-4 { animation: subtleFadeInUp var(--anim-duration) var(--anim-ease) 0.4s forwards; }
+.animate-subtle-up.animate-delay-5 { animation: subtleFadeInUp var(--anim-duration) var(--anim-ease) 0.5s forwards; }
+.animate-subtle-up.animate-delay-6 { animation: subtleFadeInUp var(--anim-duration) var(--anim-ease) 0.6s forwards; }
+
+.animate-subtle-scale.animate-delay-1 { animation: subtleFadeInScale var(--anim-duration) var(--anim-ease) 0.1s forwards; }
+.animate-subtle-scale.animate-delay-2 { animation: subtleFadeInScale var(--anim-duration) var(--anim-ease) 0.2s forwards; }
+.animate-subtle-scale.animate-delay-3 { animation: subtleFadeInScale var(--anim-duration) var(--anim-ease) 0.3s forwards; }
+.animate-subtle-scale.animate-delay-4 { animation: subtleFadeInScale var(--anim-duration) var(--anim-ease) 0.4s forwards; }
+
+/* Hover Effects */
+.animate-hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.animate-hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(107, 33, 168, 0.3);
+}
+
+/* Page Load Animation Container */
+.page-animate-container {
+    opacity: 0;
+    animation: subtleFadeIn var(--anim-duration) var(--anim-ease) forwards;
+}
     --font-4xl: 2.25rem;
     
     --radius-lg: 16px;
@@ -51,6 +202,152 @@
     
     --glass-bg: rgba(255, 255, 255, 0.8);
     --glass-blur: blur(12px);
+}
+
+/* Light Mode - Base Elements */
+[data-theme="light"] {
+    background-color: #ffffff;
+    color: #0a0a0a;
+}
+
+[data-theme="light"] body {
+    background-color: #ffffff;
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .new-main-content {
+    background-color: #ffffff;
+    color: #0a0a0a;
+}
+
+/* Light Mode - Navbar */
+[data-theme="light"] .new-navbar {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .new-navbar-center a {
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .new-navbar-center a:hover,
+[data-theme="light"] .new-navbar-center a.active {
+    color: #6B21A8;
+}
+
+[data-theme="light"] .new-navbar-scoreboard-btn {
+    color: #0a0a0a;
+}
+
+/* Light Mode - Hero Section */
+[data-theme="light"] .new-hero-section {
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+}
+
+[data-theme="light"] .new-hero-team-name {
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .new-hero-score-value {
+    color: #0a0a0a;
+}
+
+/* Light Mode - Match Cards */
+[data-theme="light"] .match-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .match-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .match-teams {
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .match-title {
+    color: #6b7280;
+}
+
+[data-theme="light"] .match-card-info {
+    background: #ffffff;
+}
+
+/* Light Mode - Scoreboard */
+[data-theme="light"] .scoreboard-modal {
+    background: #ffffff;
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .scoreboard-header h2 {
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .tab-button {
+    color: #6b7280;
+    background: transparent;
+}
+
+[data-theme="light"] .tab-button.active {
+    color: #6B21A8;
+    background: rgba(107, 33, 168, 0.1);
+}
+
+/* Light Mode - Mobile Bottom Sheet */
+[data-theme="light"] .mobile-bottom-sheet {
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.1) inset;
+}
+
+[data-theme="light"] .mobile-bottom-sheet::before {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .bottom-sheet-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .bottom-sheet-header h3 {
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .bottom-sheet-close {
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .mobile-nav-item {
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .mobile-nav-item:hover,
+[data-theme="light"] .mobile-nav-item.active {
+    background-color: rgba(107, 33, 168, 0.15);
+}
+
+[data-theme="light"] .mobile-sidebar-section h4 {
+    color: #6b7280;
+}
+
+[data-theme="light"] .mobile-user-section {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .mobile-user-name {
+    color: #0a0a0a;
+}
+
+[data-theme="light"] .mobile-user-role {
+    color: #6b7280;
+}
+
+[data-theme="light"] .bottom-sheet-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .mobile-hamburger-btn .hamburger-line {
+    background-color: #0a0a0a;
 }
 
 /* Light Mode - Sidebar */

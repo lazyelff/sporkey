@@ -14,15 +14,21 @@ function Scoreboard({ isOpen, onClose }) {
 
     return (
         <>
-            <div className="scoreboard-overlay" onClick={onClose}></div>
-            <div className="scoreboard-modal">
+            <div className="scoreboard-overlay animate-fade-in" onClick={onClose}></div>
+            <div className="scoreboard-modal animate-subtle-up">
                 <div className="scoreboard-header">
-                    <h2>USER LEADERBOARD</h2>
+                    <h2 className="animate-subtle">USER LEADERBOARD</h2>
                     <div className="scoreboard-header-right">
-                        <div className="scoreboard-current-points">
-                            <span className="points-label">Your Rank:</span>
-                            <span className="points-value">#{getCurrentUserRank.rank}</span>
-                        </div>
+                        {user?.id ? (
+                            <div className="scoreboard-current-points">
+                                <span className="points-label">Your Rank:</span>
+                                <span className="points-value">#{getCurrentUserRank.rank}</span>
+                            </div>
+                        ) : (
+                            <div className="scoreboard-current-points" style={{ opacity: 0.6 }}>
+                                <span className="points-label" style={{ fontSize: '0.85rem' }}>Login to see your rank</span>
+                            </div>
+                        )}
                         <button className="scoreboard-close-btn" onClick={onClose}>✕</button>
                     </div>
                 </div>

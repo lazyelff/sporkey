@@ -5,6 +5,7 @@ import VideoPlayer from './components/VideoPlayer';
 import Scoreboard from './components/Scoreboard';
 import NotificationCenter from './components/NotificationCenter';
 import LoginPage from './pages/LoginPage';
+import AnimationDemo from './pages/AnimationDemo';
 import UserProfile from './components/UserProfile';
 import AdminDashboard from './components/AdminDashboard';
 import AccountSettings from './components/AccountSettings';
@@ -92,7 +93,7 @@ function Navbar({ user, onLogout, onOpenScoreboard, currentView, setCurrentView,
                         <span className="hamburger-line"></span>
                     </div>
                 </button>
-                <div className="new-navbar-logo" onClick={() => setCurrentView('home')}>
+                <div className="new-navbar-logo animate-subtle" onClick={() => setCurrentView('home')}>
                     <img src={theme === 'light' ? '/images/logo-light.png' : '/images/logo-dark.png'} alt="Sporkey" />
                 </div>
             </div>
@@ -104,7 +105,7 @@ function Navbar({ user, onLogout, onOpenScoreboard, currentView, setCurrentView,
                 >
                     Matches
                 </a>
-                <div className="nav-dropdown-container" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                <div className="nav-dropdown-container animate-subtle-up animate-delay-1" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
                     <a 
                         onClick={() => setShowLeaguesDropdown(!showLeaguesDropdown)}
                         style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
@@ -340,7 +341,7 @@ function HeroSection({ match, onWatchMatch }) {
                 <div className="new-hero-bg" style={{ backgroundImage: 'url(/images/screen.jpg)' }}></div>
                 <div className="new-hero-overlay" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}></div>
                 <div className="new-hero-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                    <p className="new-hero-placeholder" style={{ textAlign: 'center' }}>Select a match to watch</p>
+                    <p className="new-hero-placeholder animate-subtle" style={{ textAlign: 'center' }}>Select a match to watch</p>
                 </div>
             </section>
         );
@@ -354,14 +355,14 @@ function HeroSection({ match, onWatchMatch }) {
             {getStatusBadge()}
             
             <div className="new-hero-content">
-                <div className="new-hero-team">
+                <div className="new-hero-team animate-subtle-up animate-delay-1">
                     <div className="new-hero-team-logo">
                         <TeamLogo name={homeTeamName} logo={homeTeamLogo} />
                     </div>
                     <span className="new-hero-team-name">{homeTeamName}</span>
                 </div>
                 
-                <div className="new-hero-score">
+                <div className="new-hero-score animate-subtle-up animate-delay-2">
                     <div className="new-hero-score-display">
                         <span className="new-hero-score-value">{homeScore !== null ? homeScore : '-'}</span>
                         <span className="new-hero-score-divider">:</span>
@@ -385,12 +386,12 @@ function HeroSection({ match, onWatchMatch }) {
                         </div>
                     )}
                     
-                    <button className="new-hero-watch-btn" onClick={onWatchMatch}>
+                    <button className="new-hero-watch-btn animate-hover-lift" onClick={onWatchMatch}>
                         WATCH NOW
                     </button>
                 </div>
                 
-                <div className="new-hero-team">
+                <div className="new-hero-team animate-subtle-up animate-delay-3">
                     <div className="new-hero-team-logo">
                         <TeamLogo name={awayTeamName} logo={awayTeamLogo} />
                     </div>
@@ -759,10 +760,9 @@ function App() {
     return (
         <Routes>
             <Route path="/login" element={user?.id ? <Navigate to="/" replace /> : <LoginPage />} />
+            <Route path="/animation-demo" element={<AnimationDemo />} />
             <Route path="/" element={
-                <ProtectedRoute user={user}>
-                    <AppContent user={user} logout={logout} />
-                </ProtectedRoute>
+                <AppContent user={user} logout={logout} />
             } />
             <Route path="/profile" element={
                 <ProtectedRoute user={user}>
