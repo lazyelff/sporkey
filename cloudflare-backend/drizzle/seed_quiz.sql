@@ -1,0 +1,35 @@
+-- Quiz Questions Seeder
+INSERT INTO QuizQuestions (question, optionA, optionB, optionC, optionD, correctAnswer, difficulty, category) VALUES
+-- EASY
+('How many players are on a football team on the field?', '9', '11', '13', '15', 'B', 'easy', 'rules'),
+('What color card means a player is sent off?', 'Yellow', 'Green', 'Red', 'Blue', 'C', 'easy', 'rules'),
+('How long is a standard football match?', '60 min', '90 min', '120 min', '75 min', 'B', 'easy', 'rules'),
+('What is a goal kick?', 'Kick from the corner', 'Kick from the penalty spot', 'Kick from inside the goal area', 'Kick from the center circle', 'C', 'easy', 'rules'),
+('How many minutes is each half in football?', '40', '45', '50', '35', 'B', 'easy', 'rules'),
+('What happens if a player gets two yellow cards?', 'Nothing', 'Warning', 'Red card', 'Penalty', 'C', 'easy', 'rules'),
+('What is the offside rule about?', 'Being too far from play', 'Being ahead of the ball', 'Being behind the last defender', 'Being out of bounds', 'C', 'easy', 'rules'),
+('How many substitute players are allowed in most matches?', '3', '5', '7', '2', 'B', 'easy', 'rules'),
+('Which country is known as the birthplace of football?', 'Brazil', 'Spain', 'England', 'Italy', 'C', 'easy', 'history'),
+('What sport uses the terms hat-trick and penalty?', 'Basketball', 'Tennis', 'Football', 'Golf', 'C', 'easy', 'rules'),
+-- MEDIUM
+('Who won the 2018 FIFA World Cup?', 'Germany', 'Brazil', 'France', 'Argentina', 'C', 'medium', 'history'),
+('Which club has won the most Champions League titles?', 'Barcelona', 'Real Madrid', 'Bayern', 'AC Milan', 'B', 'medium', 'history'),
+('What is a hat-trick?', '2 goals', '3 goals', '4 goals', '5 goals', 'B', 'medium', 'rules'),
+('Which player has won the most Ballon dOr awards?', 'Cristiano Ronaldo', 'Lionel Messi', 'Michel Platini', 'Johan Cruyff', 'B', 'medium', 'players'),
+('In which year was the Premier League founded?', '1990', '1992', '1994', '1996', 'B', 'medium', 'history'),
+('Which country has won the most World Cups?', 'Germany', 'Argentina', 'Italy', 'Brazil', 'D', 'medium', 'history'),
+('Who is the all-time top scorer in the Premier League?', 'Wayne Rooney', 'Alan Shearer', 'Harry Kane', 'Thierry Henry', 'B', 'medium', 'stats'),
+('Which club is known as The Red Devils?', 'Liverpool', 'Manchester United', 'Chelsea', 'Arsenal', 'B', 'medium', 'history'),
+('What year did the first World Cup take place?', '1930', '1934', '1938', '1924', 'A', 'medium', 'history'),
+('Who won the 2022 FIFA World Cup?', 'France', 'Brazil', 'Argentina', 'Germany', 'C', 'medium', 'history'),
+-- HARD
+('In which year was VAR first used in the World Cup?', '2014', '2016', '2018', '2022', 'C', 'hard', 'history'),
+('Who scored the Hand of God goal?', 'Pelé', 'Maradona', 'Messi', 'Zidane', 'B', 'hard', 'players'),
+('Which country has never missed a World Cup?', 'Germany', 'Argentina', 'Brazil', 'Italy', 'C', 'hard', 'history'),
+('Who holds the record for most goals in a single Champions League season?', 'Cristiano Ronaldo', 'Lionel Messi', 'Robert Lewandowski', 'Karim Benzema', 'B', 'hard', 'stats'),
+('In what year did the Bosman ruling happen?', '1990', '1995', '1992', '1988', 'B', 'hard', 'history'),
+('Who was the first African player to win the Ballon dOr?', 'Didier Drogba', 'George Weah', 'Samuel Eto''o', 'Yaya Touré', 'B', 'hard', 'players'),
+('What was the score of the famous 2005 Champions League final?', '3-3', '2-2', '4-4', '1-1', 'A', 'hard', 'history'),
+('Which club has the most domestic league titles in England?', 'Manchester United', 'Liverpool', 'Arsenal', 'Manchester City', 'A', 'hard', 'history'),
+('Who is the only player to win the World Cup as both player and manager?', 'Franz Beckenbauer', 'Mario Zagallo', 'Gerd Müller', 'Paolo Maldini', 'B', 'hard', 'players'),
+('What is the youngest goalscorer in World Cup history?', 'Pelé', 'Kylian Mbappé', 'Diego Maradona', 'Lionel Messi', 'A', 'hard', 'stats');

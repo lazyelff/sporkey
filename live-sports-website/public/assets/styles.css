@@ -3428,6 +3428,18 @@ body.light-theme .profile-container { background: linear-gradient(135deg, #f5f5f
     border-color: rgba(107, 33, 168, 0.5);
 }
 
+[data-theme="light"] .close-stream-btn {
+    background: linear-gradient(135deg, #6B21A8, #9333EA);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(107, 33, 168, 0.3);
+}
+
+[data-theme="light"] .close-stream-btn:hover {
+    background: linear-gradient(135deg, #9333EA, #a855f7);
+    box-shadow: 0 6px 20px rgba(107, 33, 168, 0.4);
+}
+
 /* Sidebar Toggle Button */
 .sidebar-toggle {
     position: fixed;

@@ -19,6 +19,15 @@ export const users = sqliteTable('Users', {
   twoFaEnabled: integer('twoFaEnabled', { mode: 'boolean' }).default(false),
   twoFaSecret: text('twoFaSecret'),
   pendingEmail: text('pendingEmail').unique(),
+  // Gamification fields
+  level: integer('level').default(1),
+  xp: integer('xp').default(0),
+  totalXp: integer('totalXp').default(0),
+  badges: text('badges').default('[]'), // JSON array
+  loginStreak: integer('loginStreak').default(0),
+  lastLoginDate: text('lastLoginDate'),
+  questsCompleted: integer('questsCompleted').default(0),
+  quizCorrect: integer('quizCorrect').default(0),
   ...timestamps
 });
 
@@ -117,5 +126,59 @@ export const connectedAccounts = sqliteTable('ConnectedAccounts', {
 }, (table) => {
   return {
     connectedAccountsUniqueIndex: uniqueIndex('connected_accounts_user_id_provider').on(table.userId, table.provider)
+  }
+});
+
+// Gamification Tables
+export const xpTransactions = sqliteTable('XpTransactions', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  userId: integer('userId').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  amount: integer('amount').notNull(),
+  action: text('action').notNull(),
+  timestamp: text('timestamp').default(sql`CURRENT_TIMESTAMP`)
+});
+
+export const dailyQuests = sqliteTable('DailyQuests', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  userId: integer('userId').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  questType: text('questType').notNull(),
+  questDescription: text('questDescription').notNull(),
+  xpReward: integer('xpReward').notNull(),
+  progress: integer('progress').default(0),
+  target: integer('target').notNull(),
+  completed: integer('completed', { mode: 'boolean' }).default(false),
+  questDate: text('questDate'), // Date string
+  expiresAt: text('expiresAt')
+}, (table) => {
+  return {
+    dailyQuestsUserDateIndex: index('daily_quests_user_date').on(table.userId, table.questDate)
+  }
+});
+
+export const quizQuestions = sqliteTable('QuizQuestions', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  question: text('question').notNull(),
+  optionA: text('optionA').notNull(),
+  optionB: text('optionB').notNull(),
+  optionC: text('optionC').notNull(),
+  optionD: text('optionD').notNull(),
+  correctAnswer: text('correctAnswer').notNull(), // 'A', 'B', 'C', or 'D'
+  difficulty: text('difficulty').notNull(), // 'easy', 'medium', 'hard'
+  category: text('category').notNull(), // 'history', 'players', 'rules', 'stats'
+  createdAt: text('createdAt').default(sql`CURRENT_TIMESTAMP`)
+});
+
+export const quizAttempts = sqliteTable('QuizAttempts', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  userId: integer('userId').notNull().references(() => users.id, { onDelete: 'cascade' }),
+  questionId: integer('questionId').notNull().references(() => quizQuestions.id, { onDelete: 'cascade' }),
+  userAnswer: text('userAnswer').notNull(),
+  isCorrect: integer('isCorrect', { mode: 'boolean' }).notNull(),
+  xpEarned: integer('xpEarned').default(0),
+  timestamp: text('timestamp').default(sql`CURRENT_TIMESTAMP`),
+  dailyQuizDate: text('dailyQuizDate') // Date string for daily tracking
+}, (table) => {
+  return {
+    quizAttemptsUserDateIndex: index('quiz_attempts_user_date').on(table.userId, table.dailyQuizDate)
   }
 });

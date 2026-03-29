@@ -12,6 +12,17 @@ const POPULAR_TEAMS = [
     'NBA Teams', 'Los Angeles Lakers', 'Golden State Warriors', 'Miami Heat', 'Boston Celtics'
 ];
 
+const PROFILE_BACKGROUNDS = [
+    { id: 'default', name: 'Default Purple', gradient: 'linear-gradient(180deg, rgba(26, 26, 46, 0.95) 0%, rgba(15, 15, 26, 0.98) 100%)' },
+    { id: 'ocean', name: 'Ocean Blue', gradient: 'linear-gradient(180deg, #1a3a5c 0%, #0d1f33 100%)' },
+    { id: 'sunset', name: 'Sunset', gradient: 'linear-gradient(180deg, #4a1942 0%, #1a0a15 100%)' },
+    { id: 'forest', name: 'Forest Green', gradient: 'linear-gradient(180deg, #1a3d2e 0%, #0d1f17 100%)' },
+    { id: 'gold', name: 'Gold Premium', gradient: 'linear-gradient(180deg, #3d2e1a 0%, #1f170d 100%)' },
+    { id: 'fire', name: 'Fire Red', gradient: 'linear-gradient(180deg, #5c1a1a 0%, #330d0d 100%)' },
+    { id: 'dark', name: 'Pure Dark', gradient: 'linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%)' },
+    { id: 'space', name: 'Space Purple', gradient: 'linear-gradient(180deg, #2d1b4e 0%, #150d26 100%)' },
+];
+
 const UserProfile = ({ user, totalPoints, onBack }) => {
     const [bets, setBets] = useState([]);
     const [avatar, setAvatar] = useState('👤');
@@ -24,8 +35,22 @@ const UserProfile = ({ user, totalPoints, onBack }) => {
     const [favoriteTeam, setFavoriteTeam] = useState(null);
     const [showTeamDropdown, setShowTeamDropdown] = useState(false);
     const [teamSearch, setTeamSearch] = useState('');
+    const [profileBackground, setProfileBackground] = useState(() => {
+        return localStorage.getItem('profileBackground') || 'default';
+    });
+    const [showBackgroundPicker, setShowBackgroundPicker] = useState(false);
     const teamDropdownRef = useRef(null);
     const fileInputRef = useRef(null);
+
+    const handleBackgroundChange = (bgId) => {
+        setProfileBackground(bgId);
+        localStorage.setItem('profileBackground', bgId);
+    };
+
+    const getCurrentBackground = () => {
+        const bg = PROFILE_BACKGROUNDS.find(b => b.id === profileBackground);
+        return bg ? bg.gradient : PROFILE_BACKGROUNDS[0].gradient;
+    };
 
     useEffect(() => {
         const fetchUserBets = async () => {
@@ -187,7 +212,7 @@ const UserProfile = ({ user, totalPoints, onBack }) => {
         : avatar;
 
     return (
-        <div className="profile-container">
+        <div className="profile-container" style={{ background: getCurrentBackground() }}>
             <div className="profile-header animate-subtle">
                 <button className="back-btn" onClick={onBack}>
                     ← Back to Matches
@@ -216,6 +241,28 @@ const UserProfile = ({ user, totalPoints, onBack }) => {
                                 >
                                     Edit Profile
                                 </button>
+                                <button 
+                                    className="background-btn"
+                                    onClick={() => setShowBackgroundPicker(!showBackgroundPicker)}
+                                    style={{ marginTop: '8px' }}
+                                >
+                                    🎨 Change Background
+                                </button>
+                                {showBackgroundPicker && (
+                                    <div className="background-picker">
+                                        <div className="background-options">
+                                            {PROFILE_BACKGROUNDS.map(bg => (
+                                                <button
+                                                    key={bg.id}
+                                                    className={`background-option ${profileBackground === bg.id ? 'active' : ''}`}
+                                                    onClick={() => handleBackgroundChange(bg.id)}
+                                                    title={bg.name}
+                                                    style={{ background: bg.gradient }}
+                                                />
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                                 
                                 <div className="favorite-team-section" ref={teamDropdownRef} style={{ position: 'relative' }}>
                                     {favoriteTeam ? (
