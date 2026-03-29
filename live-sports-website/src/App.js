@@ -13,6 +13,9 @@ import NotFound from './pages/NotFound';
 import UserProfile from './components/UserProfile';
 import AdminDashboard from './components/AdminDashboard';
 import AccountSettings from './components/AccountSettings';
+import DailyQuests from './pages/DailyQuests';
+import DailyQuiz from './pages/DailyQuiz';
+import LevelDisplay from './components/LevelDisplay';
 import { useNotifications } from './hooks/useNotifications';
 import { useScoreTracker } from './hooks/useScoreTracker';
 import { useAuth } from './hooks/useAuth';
@@ -148,6 +151,8 @@ function Navbar({ user, onLogout, onOpenScoreboard, currentView, setCurrentView,
                 <a className="active" href="#">Live Now</a>
                 <a onClick={() => navigate('/scores')}>Scores</a>
                 <a onClick={() => navigate('/standings')}>Standings</a>
+                <a onClick={() => navigate('/quests')}>Quests</a>
+                <a onClick={() => navigate('/quiz')}>Quiz</a>
             </div>
             
             <div className="new-navbar-right">
@@ -675,6 +680,18 @@ function AppContent({ user, logout }) {
                     >
                         Standings
                     </a>
+                    <a 
+                        className="mobile-nav-item"
+                        onClick={() => { navigate('/quests'); setIsMobileMenuOpen(false); }}
+                    >
+                        Quests
+                    </a>
+                    <a 
+                        className="mobile-nav-item"
+                        onClick={() => { navigate('/quiz'); setIsMobileMenuOpen(false); }}
+                    >
+                        Quiz
+                    </a>
                     {user?.role === 'admin' && (
                         <a 
                             className="mobile-nav-item"
@@ -808,6 +825,28 @@ function App() {
                         exit="exit"
                     >
                         <Standings />
+                    </motion.div>
+                } />
+                <Route path="/quests" element={
+                    <motion.div
+                        key="quests"
+                        variants={pageVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                    >
+                        <DailyQuests />
+                    </motion.div>
+                } />
+                <Route path="/quiz" element={
+                    <motion.div
+                        key="quiz"
+                        variants={pageVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                    >
+                        <DailyQuiz />
                     </motion.div>
                 } />
                 <Route path="/" element={
