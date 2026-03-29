@@ -6,6 +6,53 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL || '/api';
 // Team logo cache
 const teamLogoCache = {};
 
+// Team name mappings for better API matching
+const teamNameMappings = {
+    'man utd': 'manchester united',
+    'manchester utd': 'manchester united',
+    'mufc': 'manchester united',
+    'man city': 'manchester city',
+    'mcfc': 'manchester city',
+    'liv': 'liverpool',
+    'lfc': 'liverpool',
+    'che': 'chelsea',
+    'cfc': 'chelsea',
+    'ars': 'arsenal',
+    'afc': 'arsenal',
+    'rma': 'real madrid',
+    'fcb': 'fc barcelona',
+    'barca': 'fc barcelona',
+    'bayern': 'fc bayern munchen',
+    'psg': 'paris saint germain',
+    'juve': 'juventus',
+    'ac milan': 'ac milan',
+    'inter': 'internazionale',
+};
+
+// Direct logo URLs for top teams (most reliable)
+const directLogos = {
+    'manchester united': 'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg',
+    'manchester city': 'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg',
+    'liverpool': 'https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg',
+    'chelsea': 'https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg',
+    'arsenal': 'https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg',
+    'tottenham': 'https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg',
+    'real madrid': 'https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg',
+    'barcelona': 'https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona.svg',
+    'bayern munich': 'https://upload.wikimedia.org/wikipedia/en/1/1b/FC_Bayern_M%C3%BCnchen_logo.svg',
+    'paris saint-germain': 'https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_FC.svg',
+    'psg': 'https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_FC.svg',
+    'juventus': 'https://upload.wikimedia.org/wikipedia/en/b/bc/ Juventus_FC_.svg',
+    'ac milan': 'https://upload.wikimedia.org/wikipedia/en/d/d0/AC_Milan.svg',
+    'inter milan': 'https://upload.wikimedia.org/wikipedia/en/0/00/Inter_Milan.svg',
+    'atletico madrid': 'https://upload.wikimedia.org/wikipedia/en/7/72/Atl%C3%A9tico_Madrid_logo.svg',
+    'borussia dortmund': 'https://upload.wikimedia.org/wikipedia/en/6/67/Borussia_Dortmund_logo.svg',
+    'ajax': 'https://upload.wikimedia.org/wikipedia/en/0/04/AFC_Ajax.svg',
+    'roma': 'https://upload.wikimedia.org/wikipedia/en/f/f7/AS_Roma_logo.svg',
+    'napoli': 'https://upload.wikimedia.org/wikipedia/en/2/2d/SSC_Napoli.svg',
+    'atlético madrid': 'https://upload.wikimedia.org/wikipedia/en/7/72/Atl%C3%A9tico_Madrid_logo.svg',
+};
+
 export const fetchTeamLogo = async (teamName) => {
     if (!teamName) return null;
     
@@ -14,7 +61,21 @@ export const fetchTeamLogo = async (teamName) => {
         return teamLogoCache[cacheKey];
     }
     
+    // Check direct logos first (most reliable)
+    if (directLogos[cacheKey]) {
+        teamLogoCache[cacheKey] = directLogos[cacheKey];
+        return directLogos[cacheKey];
+    }
+    
+    // Check mapped names
+    const mappedName = teamNameMappings[cacheKey];
+    if (mappedName && directLogos[mappedName]) {
+        teamLogoCache[cacheKey] = directLogos[mappedName];
+        return directLogos[mappedName];
+    }
+    
     try {
+        // Try TheSportsDB with exact name
         const response = await axios.get(`https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t=${encodeURIComponent(teamName)}`, {
             timeout: 5000
         });
@@ -23,6 +84,19 @@ export const fetchTeamLogo = async (teamName) => {
             const logoUrl = response.data.teams[0].strTeamBadge;
             teamLogoCache[cacheKey] = logoUrl;
             return logoUrl;
+        }
+        
+        // Try with mapped name
+        if (mappedName) {
+            const altResponse = await axios.get(`https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t=${encodeURIComponent(mappedName)}`, {
+                timeout: 5000
+            });
+            
+            if (altResponse.data?.teams?.[0]?.strTeamBadge) {
+                const logoUrl = altResponse.data.teams[0].strTeamBadge;
+                teamLogoCache[cacheKey] = logoUrl;
+                return logoUrl;
+            }
         }
     } catch (error) {
         console.error('Error fetching team logo:', error);

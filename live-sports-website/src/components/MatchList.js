@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef } from 'react';
-import { fetchMatches, getFavorites, addFavorite, removeFavorite } from '../services/api';
+import { fetchMatches, getFavorites, addFavorite, removeFavorite, fetchTeamLogo } from '../services/api';
 import { useAuth } from '../hooks/useAuth';
 
 // Constants moved outside component to prevent recreation
